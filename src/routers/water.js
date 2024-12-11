@@ -7,6 +7,7 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   createWaterNoteController,
+  removeWaterNoneController,
   updateWaterNoteController,
 } from '../controllers/water.js';
 import { isValidId } from '../middlewares/isValidId.js';
@@ -24,6 +25,12 @@ router.patch(
   isValidId,
   validateBody(updateWaterNoteShcema),
   ctrlWrapper(updateWaterNoteController),
+);
+
+router.delete(
+  '/:waterNoteId',
+  isValidId,
+  ctrlWrapper(removeWaterNoneController),
 );
 
 export default router;

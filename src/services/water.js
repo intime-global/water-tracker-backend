@@ -25,3 +25,12 @@ export const updateWater = async ({ _id, userId, payload }) => {
 
   return updatedWaterNote;
 };
+
+export const removeWater = async ({ _id, userId }) => {
+  const removedWaterNote = await WaterNotesCollection.findOneAndDelete({
+    _id,
+    userId,
+  });
+
+  return removedWaterNote;
+};

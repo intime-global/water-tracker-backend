@@ -1,6 +1,6 @@
 // import createHttpError from 'http-errors';
 import createHttpError from 'http-errors';
-import { createWater, updateWater } from '../services/water.js';
+import { createWater, removeWater, updateWater } from '../services/water.js';
 
 /**
   |============================
@@ -46,4 +46,26 @@ export const updateWaterNoteController = async (req, res, next) => {
     message: 'Successfully updated a waterNote!',
     data: updatedWaterNote,
   });
+};
+
+/**
+  |============================
+  | delete waterNote controller
+  |============================
+*/
+
+export const removeWaterNoneController = async (req, res, next) => {
+  //   const userId = req.user._id;
+  const userId = '6758cda906bf9963f634acd6';
+
+  const { waterNoteId: _id } = req.params;
+
+  const removedWaterNote = await removeWater({ _id, userId });
+
+  if (!removedWaterNote) {
+    next(createHttpError(404, `WaterNote with id ${_id} not found`));
+    return;
+  }
+
+  res.status(204).json({ status: 204 });
 };
