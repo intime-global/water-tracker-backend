@@ -1,10 +1,12 @@
 import { Schema, model } from 'mongoose';
+import { emailRegexp } from '../../constants/user.js';
 
 const usersSchema = new Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    email: { type: String, match: emailRegexp, requirerd: true, unique: true },
+    password: { type: String, requirerd: true },
+    verify: { type: Boolean, default: false, required: true },
   },
   { timestamps: true, versionKey: false },
 );
