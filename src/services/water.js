@@ -34,3 +34,13 @@ export const removeWater = async ({ _id, userId }) => {
 
   return removedWaterNote;
 };
+
+export const updateWaterRate = async ({ _id, waterRate }) => {
+  const updatedUser = await UsersCollection.findOneAndUpdate(
+    { _id },
+    { waterRate },
+    { new: true },
+  );
+
+  return updatedUser;
+};

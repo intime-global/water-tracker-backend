@@ -1,6 +1,12 @@
 // import createHttpError from 'http-errors';
 import createHttpError from 'http-errors';
-import { createWater, removeWater, updateWater } from '../services/water.js';
+import {
+  createWater,
+  removeWater,
+  updateWater,
+  updateWaterRate,
+} from '../services/water.js';
+import { UsersCollection } from '../db/models/user.js';
 
 /**
   |============================
@@ -54,7 +60,7 @@ export const updateWaterNoteController = async (req, res, next) => {
   |============================
 */
 
-export const removeWaterNoneController = async (req, res, next) => {
+export const removeWaterNoteController = async (req, res, next) => {
   //   const userId = req.user._id;
   const userId = '6758cda906bf9963f634acd6';
 
@@ -68,4 +74,34 @@ export const removeWaterNoneController = async (req, res, next) => {
   }
 
   res.status(204).json({ status: 204 });
+};
+
+/**
+  |============================
+  | update water rate controller
+  |============================
+*/
+
+export const updateWaterRateController = async (req, res, next) => {
+  // const userId = req.user._id;
+  // const _id = '6758cda906bf9963f634acd6';
+
+  const _id = '6759c583888cc9a0b67e7b82';
+
+  const { waterRate } = req.body;
+
+  const user = await UsersCollection.findOne({ _id });
+
+  if (!user) {
+    next(createHttpError(404, `User with id ${_id} not found`));
+    return;
+  }
+
+  const updatedUser = await updateWaterRate({ _id, waterRate });
+
+  res.status(200).json({
+    status: 200,
+    message: "Successfully updated user's waterRate!",
+    data: updatedUser,
+  });
 };

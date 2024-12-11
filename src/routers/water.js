@@ -4,12 +4,15 @@ import {
   createWaterNoteShcema,
   updateWaterNoteShcema,
 } from '../validation/water.js';
+
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+
 import {
   createWaterNoteController,
-  removeWaterNoneController,
+  removeWaterNoteController,
   updateWaterNoteController,
 } from '../controllers/water.js';
+
 import { isValidId } from '../middlewares/isValidId.js';
 
 const router = Router();
@@ -30,7 +33,7 @@ router.patch(
 router.delete(
   '/:waterNoteId',
   isValidId,
-  ctrlWrapper(removeWaterNoneController),
+  ctrlWrapper(removeWaterNoteController),
 );
 
 export default router;

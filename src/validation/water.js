@@ -22,3 +22,7 @@ export const updateWaterNoteShcema = Joi.object({
     }),
   waterVolume: Joi.number().min(50).max(5000),
 });
+
+export const updateWaterRateSchema = Joi.object({
+  waterRate: Joi.number().min(50).max(15000).required(),
+});
