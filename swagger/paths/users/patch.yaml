@@ -1,25 +1,29 @@
-#/swagger/paths/students/post.yaml
-
+# swagger/paths/user/patch.yaml
 tags:
   - Users
-summary: Create user
-operationId: createUser
-description: 'Create a user with payload'
+summary: Update card user by id
+operationId: patchUser
+description: 'Patch user by id, and update with payload'
 security:
   - bearerAuth: []
+parameters:
+  - in: query
+    name: password
+    schema:
+      type: string
+    example: '123Di@gmail.com'
 requestBody:
   content:
     multipart/form-data:
       schema:
         type: object
         required:
-          - email
           - password
         properties:
           name:
             description: "User's name"
             type: string
-            example: 'Johni Dap'
+            example: 'John Doe'
           email:
             description: "User's email"
             type: string
@@ -27,7 +31,7 @@ requestBody:
           password:
             description: "User's password"
             type: string
-            example: '123Den'
+            example: '123Di@gmail.com'
           gender:
             description: 'Your gender identify'
             type: string
@@ -41,8 +45,8 @@ requestBody:
             type: string
             format: binary
 responses:
-  '201':
-    description: Creates a user
+  '200':
+    description: 'Update user by id'
     content:
       application/json:
         schema:
@@ -54,12 +58,14 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: Successfully created a user!
+              example: Successfully upsert user with id !
             data:
               type: object
               $ref: '../../components/schemas/user.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'

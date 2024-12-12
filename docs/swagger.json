@@ -33,21 +33,47 @@
   ],
   "paths": {
     "/users": {
-      "post": {
+      "get": {
         "tags": [
           "Users"
         ],
-        "summary": "Create user",
-        "operationId": "createUser",
-        "description": "Create a user with payload",
+        "summary": "Get user all parameters",
+        "operationId": "getUser",
+        "description": "Get user all parameters",
         "security": [
           {
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Jonni"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Jonni_Do1@gmail.com"
+          },
+          {
+            "in": "query",
+            "name": "daylyNorm",
+            "schema": {
+              "type": "string"
+            },
+            "example": 1500
+          }
+        ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -93,66 +119,6 @@
             }
           }
         },
-        "responses": {
-          "201": {
-            "description": "Creates a user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 201
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully created a user!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/user"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get user by id",
-        "operationId": "getUser",
-        "description": "Get user by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Get user by id",
@@ -205,13 +171,12 @@
         ],
         "parameters": [
           {
-            "in": "path",
-            "name": "id",
-            "required": true,
+            "in": "query",
+            "name": "password",
             "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
+              "type": "string"
+            },
+            "example": "123Di@gmail.com"
           }
         ],
         "requestBody": {
@@ -220,7 +185,6 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "email",
                   "password"
                 ],
                 "properties": {
@@ -237,7 +201,7 @@
                   "password": {
                     "description": "User's password",
                     "type": "string",
-                    "example": "123Den"
+                    "example": "123Di@gmail.com"
                   },
                   "gender": {
                     "description": "Your gender identify",
@@ -282,6 +246,87 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully upsert user with id !"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/users/avatar": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update card user avatar",
+        "operationId": "patchUserAvatar",
+        "description": "Patch user avatar, and update with payload",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "photo",
+            "schema": {
+              "type": "string"
+            },
+            "example": "binary"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "photo"
+                ],
+                "properties": {
+                  "photo": {
+                    "description": "Link to user's photo or avatar",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update user by avatar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully upsert user avatar !"
                     },
                     "data": {
                       "type": "object",

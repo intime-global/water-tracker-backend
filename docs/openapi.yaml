@@ -22,14 +22,13 @@ servers:
 paths:
   #додаємо get  всих users
   /users:
-    post:
-      $ref: ../swagger/paths/users/post.yaml
-  #додаємо запити по id
-  /users/{id}:
     get:
-      $ref: ../swagger/paths/users/{id}/get.yaml
+      $ref: ../swagger/paths/users/get.yaml
     patch:
-      $ref: ../swagger/paths/users/{id}/patch.yaml
+      $ref: ../swagger/paths/users/patch.yaml
+  /users/avatar:
+    patch:
+      $ref: ../swagger/paths/users/avatar/patch.yaml
   #додаємо всі запити по Юзеру(auth)
   /auth/register:
     post:
@@ -43,8 +42,10 @@ paths:
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
-  # POST /auth/request-reset-email
-  # POST /reset-password
+  # POST /auth/send-reset-email
+  # POST /auth/reset-pwd
+  # POST /auth/confirm-oauth
+  # Get /auth/get-oauth-url
   #додаємо всі запити по Water(water)
   /water:
     post:

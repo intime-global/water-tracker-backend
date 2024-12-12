@@ -34,8 +34,6 @@ export const setupServer = () => {
 
   // app.use(logger);
 
-  // app.use(router);
-
   app.use(notFoundHandler);
 
   app.use(errorHandler);

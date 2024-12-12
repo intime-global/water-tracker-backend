@@ -1,21 +1,19 @@
 
 import { UsersCollection } from '../db/models/user.js';
 
-export const createNewUser = payload => UsersCollection.create(payload);
-
-export const getUserById = async (_id, userId) => {
-    const user = await UsersCollection.findOne({ _id, userId: userId });
+export const getAllParamsUser = async () => {
+ const user = await UsersCollection.findOne();
     return user;
 };
 
-// export const deletUserById = async (_id, userId) => {
-//     const user = await UsersCollection.findOneAndDelete({ _id, userId: userId });
-//     return user;
-// };
+export const getUserById = async (_id) => {
+    const user = await UsersCollection.findOne({ _id });
+    return user;
+};
 
-export const updateUserById = async (_id, userId, payload, options = {}) => {
+export const updateUserById = async (_id, payload, options = {}) => {
     const rawResult = await UsersCollection.findOneAndUpdate(
-        { _id, userId: userId }, payload,
+        { _id }, payload,
         {
             new: true,
             includeResultMetadata: true,

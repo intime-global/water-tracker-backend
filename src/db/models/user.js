@@ -1,15 +1,18 @@
 import { Schema, model } from 'mongoose';
-import { emailRegexp } from '../../constants/user.js';
+import { emailRegexp } from '../../constants/users.js';
+
+import { handleSaveError, setupUpdateValidator } from './hooks.js';
 
 const usersSchema = new Schema(
   {
     name: { type: String },
     email: { type: String, match: emailRegexp, requirerd: true, unique: true },
     password: { type: String, requirerd: true },
-    gender: { type: String },
+    waterRate: { type: String, default: '1500' },
+    gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
     daylyNorm: { type: String },
     photo: { type: String },
-    // verify: { type: Boolean, default: false, required: true },
+
   },
   { timestamps: true, versionKey: false },
 );
@@ -20,6 +23,11 @@ usersSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const sortByList = ["name", "email", "gender"];
+usersSchema.post('save', handleSaveError);
+
+usersSchema.pre('findOneAndUpdate', setupUpdateValidator);
+
+usersSchema.post('findOneAndUpdate', handleSaveError);
+
 
 export const UsersCollection = model('users', usersSchema);

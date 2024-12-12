@@ -3,18 +3,17 @@ import { Router } from 'express';
 
 const router = Router();
 import {
-     userByIdControl, createUserController, patchUserControl
+     userAllParamsControl, patchUserParamsControl, patchUserPhotoControl
 } from '../controllers/users.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { createUsersCard, updateUsersCard } from '../validation/user.js';
+import { updateUsersCard } from '../validation/user.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { isValidId } from '../middlewares/isValidId.js';
-// import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/multer.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
-// router.use(authenticate);
-router.get('/:id', isValidId, ctrlWrapper(userByIdControl));
-router.post('/', upload.single('photo'), validateBody(createUsersCard), ctrlWrapper(createUserController));
-router.patch('/:id', isValidId, upload.single('photo'), validateBody(updateUsersCard), ctrlWrapper(patchUserControl));
+router.use(authenticate);
+router.get('/', ctrlWrapper(userAllParamsControl));
+router.patch('/', validateBody(updateUsersCard), ctrlWrapper(patchUserParamsControl));
+router.patch('/avatar', upload.single('photo'), validateBody(updateUsersCard), ctrlWrapper(patchUserPhotoControl));
 
 export default router;

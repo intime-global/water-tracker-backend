@@ -1,22 +1,32 @@
-
-# swagger/paths/user/{id}/get.yaml
+# swagger/paths/user/avatar/patch.yaml
 tags:
   - Users
-summary: Get user by id
-operationId: getUser
-description: 'Get user by id'
+summary: Update card user avatar
+operationId: patchUserAvatar
+description: 'Patch user avatar, and update with payload'
 security:
   - bearerAuth: []
 parameters:
-  - in: path
-    name: id
-    required: true
+  - in: query
+    name: photo
     schema:
       type: string
-      example: '65ca67e7ae7f10c88b598384'
+    example: binary
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - photo
+        properties:
+          photo:
+            description: "Link to user's photo or avatar"
+            type: string
+            format: binary
 responses:
   '200':
-    description: 'Get user by id'
+    description: 'Update user by avatar'
     content:
       application/json:
         schema:
@@ -31,7 +41,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully found user with id 65ca67e7ae7f10c88b598384!
+              example: Successfully upsert user avatar !
             data:
               type: object
               $ref: '../../../components/schemas/user.yaml'

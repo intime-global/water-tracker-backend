@@ -1,21 +1,30 @@
-# swagger/paths/user/{id}/patch.yaml
+# get
 tags:
   - Users
-summary: Update card user by id
-operationId: patchUser
-description: 'Patch user by id, and update with payload'
+summary: Get user all parameters
+operationId: getUser
+description: 'Get user all parameters'
 security:
   - bearerAuth: []
 parameters:
-  - in: path
-    name: id
-    required: true
+  - in: query
+    name: name
     schema:
       type: string
-      example: '65ca67e7ae7f10c88b598384'
+    example: 'Jonni'
+  - in: query
+    name: email
+    schema:
+      type: string
+    example: 'Jonni_Do1@gmail.com'
+  - in: query
+    name: daylyNorm
+    schema:
+      type: string
+    example: 1500
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
         required:
@@ -25,7 +34,7 @@ requestBody:
           name:
             description: "User's name"
             type: string
-            example: 'John Doe'
+            example: 'Johni Dap'
           email:
             description: "User's email"
             type: string
@@ -48,7 +57,7 @@ requestBody:
             format: binary
 responses:
   '200':
-    description: 'Update user by id'
+    description: 'Get user by id'
     content:
       application/json:
         schema:
@@ -63,11 +72,11 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully upsert user with id !
+              example: Successfully found user with id 65ca67e7ae7f10c88b598384!
             data:
               type: object
-              $ref: '../../../components/schemas/user.yaml'
+              $ref: '../../components/schemas/user.yaml'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: '../../components/responses/401.yaml'
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: '../../components/responses/404.yaml'
