@@ -3,7 +3,10 @@ import { handleSaveError, setupUpdateValidator } from './hooks.js';
 
 const usersSchema = new Schema(
   {
-    name: { type: String },
+    name: {
+      type: String,
+      default: 'Anonymous',
+    },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     waterRate: { type: String, default: '1500' },
