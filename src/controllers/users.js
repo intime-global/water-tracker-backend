@@ -6,21 +6,21 @@ import createHttpError from 'http-errors';
 import { sortByList } from '../db/models/user.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
-import { parsFilterParams } from '../utils/parseFilterParams.js';
+// import { parsFilterParams } from '../utils/parseFilterParams.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
-export const contactAllControl = async (req, res) => {
+export const usersAllControl = async (req, res) => {
     const { page, perPage } = parsePaginationParams(req.query);
     const { sortBy, sortOrder } = parseSortParams(req.query, sortByList);
-    const filter = parsFilterParams(req.query);
-    const { _id: userId } = req.user;
-    filter.userId = userId;
+    // const filter = parsFilterParams(req.query);
+    // const { _id: userId } = req.user;
+    // filter.userId = userId;
     const users = await getAllUsers({
         page, perPage,
         sortBy, sortOrder,
-        filter,
+        // filter,
     });
     res.json({
         status: 200,
@@ -29,7 +29,7 @@ export const contactAllControl = async (req, res) => {
     });
 };
 
-export const createContactController = async (req, res) => {
+export const createUserController = async (req, res) => {
 
     const { _id: userId } = req.user;
     const photo = req.file;
@@ -43,15 +43,15 @@ export const createContactController = async (req, res) => {
         }
     }
 
-    const contact = await createNewUser({ ...req.body, userId, photo: photoUrl });
+    const user = await createNewUser({ ...req.body, userId, photo: photoUrl });
     res.status(201).json({
         status: 201,
         message: 'Successfully created a user!',
-        contact,
+        user,
     });
 };
 
-export const contactByIdControl = async (req, res, next) => {
+export const userByIdControl = async (req, res, next) => {
     const userId = req.user._id;
     const { id } = req.params;
     const user = await getUserById(id, userId);
@@ -65,7 +65,7 @@ export const contactByIdControl = async (req, res, next) => {
     });
 };
 
-export const deleteContactControl = async (req, res, next) => {
+export const deleteUserControl = async (req, res, next) => {
     const userId = req.user._id;
     const { id } = req.params;
     const deletcontact = await deletUserById(id, userId);
@@ -77,7 +77,7 @@ export const deleteContactControl = async (req, res, next) => {
     );
 };
 // щоб функція updateContactById могла не тільки оновлювати, але й створювати ресурс при його відсутності, необхідно їй аргументом додатково передати { upsert: true }.
-export const upsertContactControl = async (req, res, next) => {
+export const upsertUserControl = async (req, res, next) => {
     const userId = req.user._id;
     const { id } = req.params;
     const photo = req.file;
@@ -101,11 +101,11 @@ export const upsertContactControl = async (req, res, next) => {
     res.status(status).json({
         status: 200,
         massage: 'Successfully upserted a user!',
-        data: resultUpdate.contact,
+        data: resultUpdate.user,
     });
 };
 // Оскільки ми вже маємо функцію сервісу updateContactById, але ми не будемо під час виклику нічого передавати третім аргументом options
-export const patchContactControl = async (req, res, next) => {
+export const patchUserControl = async (req, res, next) => {
     const userId = req.user._id;
     const { id } = req.params;
     const photo = req.file;
@@ -127,6 +127,6 @@ export const patchContactControl = async (req, res, next) => {
     res.json({
         status: 200,
         massage: 'Successfully patched a user!',
-        data: resultPatch.contact,
+        data: resultPatch.user,
     });
 };

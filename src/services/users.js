@@ -1,42 +1,39 @@
 import { SORT_ORDER } from '../constants/index.js';
-import { UsersCollection } from '../db/models/users.js';
+import { UsersCollection } from '../db/models/user.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const getAllUsers = async (
     { page = 1, perPage = 4, sortOrder = SORT_ORDER.ASC, sortBy = '_id', filter = {}, }) => {
     const limit = perPage;
     const skip = (page - 1) * perPage;
-    const contactsQuery = UsersCollection.find();
+    const usersQuery = UsersCollection.find();
 
-    if (filter.contactType) {
-        contactsQuery.where('contactType').equals(filter.contactType);
-    };
-    if (filter.isFavourite !== undefined) {
-        contactsQuery.where('isFavourite').equals(filter.isFavourite);
+    if (filter.gender) {
+        usersQuery.where('gender').equals(filter.gender);
     };
     if (filter.userId !== undefined) {
-        contactsQuery.where('userId').equals(filter.userId);
+        usersQuery.where('userId').equals(filter.userId);
     };
 
-    const contactsCount = await UsersCollection.find().merge(contactsQuery).countDocuments();
-    const contacts = await contactsQuery.skip(skip).limit(limit).sort({ [sortBy]: sortOrder }).exec();
-    const paginationData = calculatePaginationData(contactsCount, perPage, page);
+    const usersCount = await UsersCollection.find().merge(usersQuery).countDocuments();
+    const users = await usersQuery.skip(skip).limit(limit).sort({ [sortBy]: sortOrder }).exec();
+    const paginationData = calculatePaginationData(usersCount, perPage, page);
     return {
-        data: contacts,
+        data: users,
         ...paginationData,
     };
 };
-// getAllContacts повертає - видає весь масив студентів згідно шаблону описаному в studentsSchema за рах методу find(), findById
+// getAll повертає - видає весь масив  згідно шаблону описаному в studentsSchema за рах методу find(), findById
 export const createNewUser = payload => UsersCollection.create(payload);
 
 export const getUserById = async (id, userId) => {
-    const contact = await UsersCollection.findOne({ _id: id, userId: userId });
-    return contact;
+    const user = await UsersCollection.findOne({ _id: id, userId: userId });
+    return user;
 };
 
 export const deletUserById = async (id, userId) => {
-    const contact = await UsersCollection.findOneAndDelete({ _id: id, userId: userId });
-    return contact;
+    const user = await UsersCollection.findOneAndDelete({ _id: id, userId: userId });
+    return user;
 };
 
 // Для видалення документа з колекції в Mongoose використовується метод:  findOneAndDelete(filter, options, callback)

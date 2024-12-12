@@ -7,7 +7,9 @@ const usersSchema = new Schema(
     email: { type: String, match: emailRegexp, requirerd: true, unique: true },
     password: { type: String, requirerd: true },
     gender: { type: String, required: true },
-    verify: { type: Boolean, default: false, required: true },
+    daylyNorm: { type: String, required: true },
+    photo: { type: String, required: true },
+    // verify: { type: Boolean, default: false, required: true },
   },
   { timestamps: true, versionKey: false },
 );

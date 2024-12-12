@@ -51,6 +51,8 @@ paths:
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
+  # POST /auth/request-reset-email
+  # POST /reset-password
 #додаємо всі запити по Water(water)
   /water:
     post:

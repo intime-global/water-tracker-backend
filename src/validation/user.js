@@ -1,41 +1,39 @@
-// chema
+
 import Joi from 'joi';
 
-import { typeList } from '../constants/contacts.js';
+import { genderEnum } from '../constants/user.js';
 import { emailRegexp } from '../constants/user.js';
 
-export const createContactsSchema = Joi.object({
+export const createUsersCard = Joi.object({
     name: Joi.string().min(3).max(20).required().messages({
         'string.base': 'Username should be a string',
         'string.min': 'Username should have at least {#limit} characters',
         'string.max': 'Username should have at most {#limit} characters',
         'any.required': 'Username is required',
     }),
-    phoneNumber: Joi.string().min(3).max(20).required().messages({
-        'string.min': 'phoneNumber should have at least {#limit} characters',
-        'string.max': 'phoneNumber should have at most {#limit} characters',
-        'any.required': 'phoneNumber is required',
+    email: Joi.string().pattern(emailRegexp).min(10).max(30).required().messages({
+        'string.min': 'email should have at least {#limit} characters',
+        'string.max': 'email should have at most {#limit} characters',
+        'any.required': 'email is required',
     }),
-    email: Joi.string().pattern(emailRegexp).required(),
-    isFavourite: Joi.boolean(),
-    contactType: Joi.string().valid(...typeList).required(),
-    photo: Joi.string(),
+    gender: Joi.string().valid(...genderEnum).required(),
+    daylyNorm: Joi.string().min(1000).max(15000).required(),
+    photo: Joi.string().required(),
 });
 
-export const updateContactsSchema = Joi.object({
-    name: Joi.string().min(3).max(20).messages({
+export const updateUsersCard = Joi.object({
+    name: Joi.string().min(3).max(20).required().messages({
         'string.base': 'Username should be a string',
         'string.min': 'Username should have at least {#limit} characters',
         'string.max': 'Username should have at most {#limit} characters',
         'any.required': 'Username is required',
     }),
-    phoneNumber: Joi.string().min(3).max(20).messages({
-        'string.min': 'phoneNumber should have at least {#limit} characters',
-        'string.max': 'phoneNumber should have at most {#limit} characters',
-        'any.required': 'phoneNumber is required',
+    email: Joi.string().pattern(emailRegexp).min(10).max(30).required().messages({
+        'string.min': 'email should have at least {#limit} characters',
+        'string.max': 'email should have at most {#limit} characters',
+        'any.required': 'email is required',
     }),
-    email: Joi.string().pattern(emailRegexp),
-    isFavourite: Joi.boolean(),
-    contactType: Joi.string().min(3).max(20).valid(...typeList),
-
+    gender: Joi.string().valid(...genderEnum).required(),
+    daylyNorm: Joi.string().min(1000).max(15000).required(),
+    photo: Joi.string().required(),
 });
