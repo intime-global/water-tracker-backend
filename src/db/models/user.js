@@ -6,7 +6,12 @@ const usersSchema = new Schema(
     name: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    waterRate: { type: String, default: '1500' },
+    waterRate: {
+      type: Number,
+      default: 1500,
+      min: [0, 'Amount of water cannot be negative'],
+      max: [15000, 'Amount of water cannot exceed 15 liters'],
+    },
     gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
   },
   { timestamps: true, versionKey: false },

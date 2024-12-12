@@ -2,6 +2,7 @@
 import createHttpError from 'http-errors';
 import {
   createWater,
+  getTodayWaterNotes,
   removeWater,
   updateWater,
   updateWaterRate,
@@ -83,7 +84,7 @@ export const removeWaterNoteController = async (req, res, next) => {
 */
 
 export const updateWaterRateController = async (req, res, next) => {
-  // const userId = req.user._id;
+  // const _id = req.user._id;
   // const _id = '6758cda906bf9963f634acd6';
 
   const _id = '6759c583888cc9a0b67e7b82';
@@ -103,5 +104,59 @@ export const updateWaterRateController = async (req, res, next) => {
     status: 200,
     message: "Successfully updated user's waterRate!",
     data: updatedUser,
+  });
+};
+
+/**
+  |============================
+  | get today water controller
+  |============================
+*/
+
+export const getTodayWaterController = async (req, res, next) => {
+  // const _id = req.user._id;
+
+  const _id = '6758cda906bf9963f634acd6';
+
+  const user = await UsersCollection.findOne({ _id });
+  if (!user) {
+    next(createHttpError(404, 'User not found'));
+    return;
+  }
+
+  const today = new Date();
+
+  const startOfDay = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+  ).toISOString();
+
+  const endOfDay = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+    23,
+    59,
+    59,
+    999,
+  ).toISOString();
+
+  const todayNotes = await getTodayWaterNotes({ _id, startOfDay, endOfDay });
+
+  // const waterGoal = req.user.waterRate;
+
+  const waterGoal = 500;
+
+  const consumedToday = todayNotes.reduce(
+    (acc, note) => acc + note.waterVolume,
+    0,
+  );
+  const percentage = (consumedToday * 100) / waterGoal;
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found notes of water',
+    data: { notes: todayNotes, percentage },
   });
 };

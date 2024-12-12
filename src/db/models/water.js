@@ -5,7 +5,12 @@ const waterNotesSchema = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
     date: { type: String, required: true },
-    waterVolume: { type: String, required: true },
+    waterVolume: {
+      type: Number,
+      required: true,
+      min: [0, 'Amount of water cannot be negative'],
+      max: [5000, 'Amount of water cannot exceed 5 liters'],
+    },
   },
   { versionKey: false, timestamps: true },
 );
