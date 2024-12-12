@@ -23,7 +23,7 @@ export const getAllUsers = async (
         ...paginationData,
     };
 };
-// getAll повертає - видає весь масив  згідно шаблону описаному в studentsSchema за рах методу find(), findById
+
 export const createNewUser = payload => UsersCollection.create(payload);
 
 export const getUserById = async (id, userId) => {
