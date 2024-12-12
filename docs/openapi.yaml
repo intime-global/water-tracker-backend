@@ -1,40 +1,43 @@
-# security:
-  # - bearerAuth: []
+
 # Цей блок вказує, що для доступу до операції потрібна аутентифікація за допомогою Bearer Token (bearerAuth), який був визначений у /docs/openapi.yaml
 # /docs/openapi.yaml
 
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts app
+  title: Users app
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description:
-    This is a documentation of contacts app
+    This is a documentation of users app
 tags:
-  - name: Contacts
+  - name: Users
     description: Operations about contacts.
   - name: Auth
     description: Auth operations.
+  - name: Water
+    description: Water operations.
 servers:
   - url: http://localhost:3000
   - url: https://intime-water-tracker.onrender.com
 paths:
-  #додаємо get  всих контактів
-  # /contacts:
-  #   get:
-  #     $ref: ../swagger/paths/contacts/get.yaml
-  #   post:
-  #     $ref: ../swagger/paths/contacts/post.yaml
+  #додаємо get  всих users
+  /users:
+    get:
+      $ref: ../swagger/paths/users/get.yaml
+    post:
+      $ref: ../swagger/paths/users/post.yaml
 #додаємо запити по id
-  # /contacts/{id}:
-    # get:
-    #   $ref: ../swagger/paths/contacts/{id}/get.yaml
-    # delete:
-    #   $ref: ../swagger/paths/contacts/{id}/delete.yaml
-    # patch:
-    #   $ref: ../swagger/paths/contacts/{id}/patch.yaml
+  /users/{id}:
+    get:
+      $ref: ../swagger/paths/users/{id}/get.yaml
+    delete:
+      $ref: ../swagger/paths/users/{id}/delete.yaml
+    patch:
+      $ref: ../swagger/paths/users/{id}/patch.yaml
+    put:
+      $ref: ../swagger/paths/users/{id}/put.yaml
 #додаємо всі запити по Юзеру(auth)
   /auth/register:
     post:
@@ -48,6 +51,12 @@ paths:
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh.yaml
+#додаємо всі запити по Water(water)
+  /water:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+    get:
+      $ref: ../swagger/paths/water/get.yaml
 components:
   securitySchemes:
     bearerAuth:

@@ -1,50 +1,47 @@
-# paths/auth/register.yaml
+#/swagger/paths/students/post.yaml
+
 tags:
-  - Auth
-summary: Register user
-operationId: registerUser
-description: 'Register a user with payload'
+  - Users
+summary: Create user
+operationId: createUser
+description: 'Create a user with payload'
 security:
   - bearerAuth: []
-parameters:
-  - in: query
-    name: name
-    schema:
-      type: string
-    example: 'Jonni'
-  - in: query
-    name: email
-    schema:
-      type: string
-    example: 'Jonni_Do1@gmail.com'
-  - in: query
-    name: password
-    schema:
-      type: string
-    example: '111223Jn'
 requestBody:
   content:
-    application/json:
+    multipart/form-data:
       schema:
         type: object
         required:
           - name
           - email
           - password
+          - gender
         properties:
           name:
            description: "User's name"
            type: string
-           example: 'John Doe'
+           example: 'Johni Dap'
           email:
            description: "User's email"
            type: string
-           example: 'John_Doe123@gmail.com'
+           example: 'Lui_Doe123@gmail.com'
           password:
-           description: "password"
+            description: "User's password"
+            type: string
+            example: '123Den'
+          gender:
+            description: "Your gender identify"
+            type: string
+            enum: ['women', 'man']
+          daylyNorm:
+            description: "User's daylyNorm"
+            type: number
+            example: 1800
+          photo:
+           description: "Link to user's photo"
            type: string
-           example: '111223Jn'
-
+           format: binary
 responses:
   '201':
     description: Creates a user
@@ -62,12 +59,9 @@ responses:
               example: 201
             message:
               type: string
-              example: Successfully registered a user!
+              example: Successfully created a user!
             data:
               type: object
               $ref: '../../components/schemas/user.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
-
-
-

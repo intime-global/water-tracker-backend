@@ -1,11 +1,17 @@
-# swagger/components/schemas/contact.yaml
+# swagger/components/schemas/user.yaml
 
 type: object
 required:
+  - _id
   - name
   - email
   - password
+  - gender
 properties:
+  _id:
+    description: "User's id"
+    type: string
+    example: 65e4decdd286b30065d54af9
   name:
     description: "User's name"
     type: string
@@ -17,5 +23,17 @@ properties:
   password:
     description: "User's password"
     type: string
-    example: '2221Li'
+    example: '123Den'
+  gender:
+    description: "Your gender identify"
+    type: string
+    enum: ['women', 'man']
+  daylyNorm:
+    description: "User's daylyNorm"
+    type: number
+    example: 1800
+  photo:
+    description: "Link to user's photo or avatar"
+    type: string
+    example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
 

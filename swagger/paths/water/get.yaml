@@ -1,0 +1,50 @@
+# get.All.water
+tags:
+  - Water
+summary: Get All waters card
+operationId: getWater
+description: 'Get All waters'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+    example: 1
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 10
+  - in: query
+    name: sortBy
+    schema:
+      type: string
+      example: 'date'
+    description: "All water's fields can be mentioned. Default value - _id"
+responses:
+  '200':
+    description: 'Get All waters'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found waters card !
+            data:
+              type: object
+              $ref: '../../components/schemas/water.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
