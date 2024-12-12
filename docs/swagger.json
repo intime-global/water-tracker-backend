@@ -33,83 +33,6 @@
   ],
   "paths": {
     "/users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get All users",
-        "operationId": "getUsers",
-        "description": "Get All users",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "page",
-            "schema": {
-              "type": "integer"
-            },
-            "example": 1
-          },
-          {
-            "in": "query",
-            "name": "perPage",
-            "schema": {
-              "type": "integer",
-              "example": 10
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "schema": {
-              "type": "string",
-              "example": "name"
-            },
-            "description": "All user's fields can be mentioned. Default value - _id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get All users",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found users !"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/user"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          }
-        }
-      },
       "post": {
         "tags": [
           "Users"
@@ -128,10 +51,8 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "name",
                   "email",
-                  "password",
-                  "gender"
+                  "password"
                 ],
                 "properties": {
                   "name": {
@@ -270,41 +191,6 @@
           }
         }
       },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Delete user by id",
-        "operationId": "deleteUser",
-        "description": "Delete user by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Delete User by id"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          }
-        }
-      },
       "patch": {
         "tags": [
           "Users"
@@ -334,121 +220,8 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "name",
                   "email",
-                  "password",
-                  "gender"
-                ],
-                "properties": {
-                  "name": {
-                    "description": "User's name",
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "email": {
-                    "description": "User's email",
-                    "type": "string",
-                    "example": "Lui_Doe123@gmail.com"
-                  },
-                  "password": {
-                    "description": "User's password",
-                    "type": "string",
-                    "example": "123Den"
-                  },
-                  "gender": {
-                    "description": "Your gender identify",
-                    "type": "string",
-                    "enum": [
-                      "women",
-                      "man"
-                    ]
-                  },
-                  "daylyNorm": {
-                    "description": "User's daylyNorm",
-                    "type": "number",
-                    "example": 1800
-                  },
-                  "photo": {
-                    "description": "Link to user's photo",
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update user by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully upsert user with id !"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/user"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Upsert card user by id",
-        "operationId": "putUser",
-        "description": "Put user by id, and update with payload",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "email",
-                  "password",
-                  "gender"
+                  "password"
                 ],
                 "properties": {
                   "name": {
@@ -1003,15 +776,6 @@
               "type": "integer",
               "example": 10
             }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
-            "schema": {
-              "type": "string",
-              "example": "date"
-            },
-            "description": "All water's fields can be mentioned. Default value - _id"
           }
         ],
         "responses": {
@@ -1065,11 +829,8 @@
       "user": {
         "type": "object",
         "required": [
-          "_id",
-          "name",
           "email",
-          "password",
-          "gender"
+          "password"
         ],
         "properties": {
           "_id": {
@@ -1138,7 +899,7 @@
           "curDaylyNorm": {
             "description": "User's amount",
             "type": "number",
-            "example": 15000
+            "example": 1500
           }
         }
       }

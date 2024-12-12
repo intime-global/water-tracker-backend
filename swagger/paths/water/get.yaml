@@ -17,12 +17,6 @@ parameters:
     schema:
       type: integer
       example: 10
-  - in: query
-    name: sortBy
-    schema:
-      type: string
-      example: 'date'
-    description: "All water's fields can be mentioned. Default value - _id"
 responses:
   '200':
     description: 'Get All waters'

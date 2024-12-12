@@ -1,4 +1,3 @@
-
 # swagger/paths/user/{id}/patch.yaml
 tags:
   - Users
@@ -20,25 +19,23 @@ requestBody:
       schema:
         type: object
         required:
-          - name
           - email
           - password
-          - gender
         properties:
           name:
-           description: "User's name"
-           type: string
-           example: 'John Doe'
+            description: "User's name"
+            type: string
+            example: 'John Doe'
           email:
-           description: "User's email"
-           type: string
-           example: 'Lui_Doe123@gmail.com'
+            description: "User's email"
+            type: string
+            example: 'Lui_Doe123@gmail.com'
           password:
             description: "User's password"
             type: string
             example: '123Den'
           gender:
-            description: "Your gender identify"
+            description: 'Your gender identify'
             type: string
             enum: ['women', 'man']
           daylyNorm:
@@ -46,9 +43,9 @@ requestBody:
             type: number
             example: 1800
           photo:
-           description: "Link to user's photo"
-           type: string
-           format: binary
+            description: "Link to user's photo"
+            type: string
+            format: binary
 responses:
   '200':
     description: 'Update user by id'

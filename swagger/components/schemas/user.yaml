@@ -2,11 +2,8 @@
 
 type: object
 required:
-  - _id
-  - name
   - email
   - password
-  - gender
 properties:
   _id:
     description: "User's id"
@@ -25,7 +22,7 @@ properties:
     type: string
     example: '123Den'
   gender:
-    description: "Your gender identify"
+    description: 'Your gender identify'
     type: string
     enum: ['women', 'man']
   daylyNorm:
@@ -36,4 +33,3 @@ properties:
     description: "Link to user's photo or avatar"
     type: string
     example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
-

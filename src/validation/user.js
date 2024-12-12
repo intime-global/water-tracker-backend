@@ -5,7 +5,7 @@ import { genderEnum } from '../constants/user.js';
 import { emailRegexp } from '../constants/user.js';
 
 export const createUsersCard = Joi.object({
-    name: Joi.string().min(3).max(20).required().messages({
+    name: Joi.string().min(3).max(20).messages({
         'string.base': 'Username should be a string',
         'string.min': 'Username should have at least {#limit} characters',
         'string.max': 'Username should have at most {#limit} characters',
@@ -16,13 +16,14 @@ export const createUsersCard = Joi.object({
         'string.max': 'email should have at most {#limit} characters',
         'any.required': 'email is required',
     }),
-    gender: Joi.string().valid(...genderEnum).required(),
-    daylyNorm: Joi.string().min(1000).max(15000).required(),
-    photo: Joi.string().required(),
+    gender: Joi.string().valid(...genderEnum),
+    daylyNorm: Joi.string(),
+    photo: Joi.string(),
+    password: Joi.string(),
 });
 
 export const updateUsersCard = Joi.object({
-    name: Joi.string().min(3).max(20).required().messages({
+    name: Joi.string().min(3).max(20).messages({
         'string.base': 'Username should be a string',
         'string.min': 'Username should have at least {#limit} characters',
         'string.max': 'Username should have at most {#limit} characters',
@@ -33,7 +34,8 @@ export const updateUsersCard = Joi.object({
         'string.max': 'email should have at most {#limit} characters',
         'any.required': 'email is required',
     }),
-    gender: Joi.string().valid(...genderEnum).required(),
-    daylyNorm: Joi.string().min(1000).max(15000).required(),
-    photo: Joi.string().required(),
+    gender: Joi.string().valid(...genderEnum),
+    daylyNorm: Joi.string().min(1000).max(15000),
+    photo: Joi.string(),
+    password: Joi.string(),
 });

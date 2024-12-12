@@ -1,4 +1,3 @@
-
 # Цей блок вказує, що для доступу до операції потрібна аутентифікація за допомогою Bearer Token (bearerAuth), який був визначений у /docs/openapi.yaml
 # /docs/openapi.yaml
 
@@ -9,8 +8,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description:
-    This is a documentation of users app
+  description: This is a documentation of users app
 tags:
   - name: Users
     description: Operations about contacts.
@@ -24,21 +22,15 @@ servers:
 paths:
   #додаємо get  всих users
   /users:
-    get:
-      $ref: ../swagger/paths/users/get.yaml
     post:
       $ref: ../swagger/paths/users/post.yaml
-#додаємо запити по id
+  #додаємо запити по id
   /users/{id}:
     get:
       $ref: ../swagger/paths/users/{id}/get.yaml
-    delete:
-      $ref: ../swagger/paths/users/{id}/delete.yaml
     patch:
       $ref: ../swagger/paths/users/{id}/patch.yaml
-    put:
-      $ref: ../swagger/paths/users/{id}/put.yaml
-#додаємо всі запити по Юзеру(auth)
+  #додаємо всі запити по Юзеру(auth)
   /auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
@@ -53,7 +45,7 @@ paths:
       $ref: ../swagger/paths/auth/refresh.yaml
   # POST /auth/request-reset-email
   # POST /reset-password
-#додаємо всі запити по Water(water)
+  #додаємо всі запити по Water(water)
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
@@ -64,4 +56,3 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-
