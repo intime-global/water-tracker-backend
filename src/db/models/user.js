@@ -23,4 +23,5 @@ usersSchema.post('save', handleSaveError);
 usersSchema.pre('findOneAndUpdate', setupUpdateValidator);
 
 usersSchema.post('findOneAndUpdate', handleSaveError);
+
 export const UsersCollection = model('users', usersSchema);

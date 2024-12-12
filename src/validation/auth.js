@@ -1,14 +1,18 @@
 import Joi from 'joi';
 
-export const RegisterUserSchema = Joi.object({
-  name: Joi.string().min(3).max(22).required(),
-  email: Joi.string().email().required(),
+import { emailRegexp } from '../constants/users.js';
+
+// signup
+export const authRegisterSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
 });
 
-export const LoginUserSchema = Joi.object({
+// signin
+export const authLoginSchema = Joi.object({
   email: Joi.string().email().required(),
-  password: Joi.string().required(),
+  password: Joi.string().min(6).required(),
 });
 
 export const requestResetEmailSchema = Joi.object({
@@ -19,7 +23,7 @@ export const resetPasswordSchema = Joi.object({
   password: Joi.string().required(),
   token: Joi.string().required(),
 });
-
+// OAuth
 export const loginWithGoogleOAuthSchema = Joi.object({
   code: Joi.string().required(),
 });
