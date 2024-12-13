@@ -1,0 +1,51 @@
+# swagger/paths/user/avatar/patch.yaml
+tags:
+  - Users
+summary: Update card user avatar
+operationId: patchUserAvatar
+description: 'Patch user avatar, and update with payload'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: photo
+    schema:
+      type: string
+    example: binary
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - photo
+        properties:
+          photo:
+            description: "Link to user's photo or avatar"
+            type: string
+            format: binary
+responses:
+  '200':
+    description: 'Update user by avatar'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully upsert user avatar !
+            data:
+              type: object
+              $ref: '../../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

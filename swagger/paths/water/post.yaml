@@ -1,0 +1,64 @@
+# post - new card
+tags:
+  - Water
+summary: Create WaterCard
+operationId: postWaterCard
+description: 'Create a WaterCard with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - date
+          - amount
+        properties:
+          date:
+            description: "User's date"
+            type: number
+            example: '2024-12-10T19:02'
+          amount:
+            description: "User's water amount"
+            type: number
+            example: 50
+          daylyNorm:
+            description: "User's daylyNorm water"
+            type: number
+            example: 1500
+          servings:
+            description: "User's servings"
+            type: number
+            example: 50
+          planDaylyNorm:
+            description: "User's planDaylyNorm"
+            type: number
+            example: 1800
+          curDaylyNorm:
+            description: "User's curDaylyNorm"
+            type: number
+            example: 100
+responses:
+  '201':
+    description: Creates a water card
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a water card!
+            data:
+              type: object
+              $ref: '../../components/schemas/water.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

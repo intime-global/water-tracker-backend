@@ -1,0 +1,59 @@
+# Цей блок вказує, що для доступу до операції потрібна аутентифікація за допомогою Bearer Token (bearerAuth), який був визначений у /docs/openapi.yaml
+# /docs/openapi.yaml
+
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Users app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of users app
+tags:
+  - name: Users
+    description: Operations about contacts.
+  - name: Auth
+    description: Auth operations.
+  - name: Water
+    description: Water operations.
+servers:
+  - url: http://localhost:3000
+  - url: https://intime-water-tracker.onrender.com
+paths:
+  #додаємо get  всих users
+  /users:
+    get:
+      $ref: ../swagger/paths/users/get.yaml
+    patch:
+      $ref: ../swagger/paths/users/patch.yaml
+  /users/avatar:
+    patch:
+      $ref: ../swagger/paths/users/avatar/patch.yaml
+  #додаємо всі запити по Юзеру(auth)
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh.yaml
+  # POST /auth/send-reset-email
+  # POST /auth/reset-pwd
+  # POST /auth/confirm-oauth
+  # Get /auth/get-oauth-url
+  #додаємо всі запити по Water(water)
+  /water:
+    post:
+      $ref: ../swagger/paths/water/post.yaml
+    get:
+      $ref: ../swagger/paths/water/get.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

@@ -1,10 +1,15 @@
 import { Schema, model } from 'mongoose';
+import { emailRegexp } from '../../constants/users.js';
+
 import { handleSaveError, setupUpdateValidator } from './hooks.js';
 
 const usersSchema = new Schema(
   {
-    name: { type: String },
-    email: { type: String, required: true, unique: true },
+    name: {
+      type: String,
+      default: 'Anonymous',
+    },
+    email: { type: String, match: emailRegexp, required: true, unique: true },
     password: { type: String, required: true },
     waterRate: {
       type: Number,
@@ -13,6 +18,7 @@ const usersSchema = new Schema(
       max: [15000, 'Amount of water cannot exceed 15 liters'],
     },
     gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
+    photo: { type: String },
   },
   { timestamps: true, versionKey: false },
 );

@@ -1,7 +1,6 @@
-import createHttpError from 'http-errors';
-import bcrypt from 'bcrypt';
+import createHttpError from "http-errors";
 import { randomBytes } from 'crypto';
-
+import bcrypt from 'bcrypt';
 import { UsersCollection } from '../db/models/user.js';
 import { SessionCollection } from '../db/models/session.js';
 
@@ -115,10 +114,9 @@ export const requestResetToken = async (email) => {
     await fs.readFile(resetPasswordTemplatePath)
   ).toString();
   const template = handlebars.compile(templateSource);
-  console.log(env('APP_DOMAIN'));
   const html = template({
     name: user.name,
-    link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
+    link: `${env('APP_DOMAIN')}/reset-pwd?token=${resetToken}`,
   });
   await sendEmail({
     from: env(SMTP.SMTP_FROM),
