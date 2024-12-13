@@ -1,5 +1,4 @@
 import createHttpError from 'http-errors';
-
 import { findSession, findUser } from '../services/auth.js';
 
 export const authenticate = async (req, res, next) => {
@@ -13,22 +12,17 @@ export const authenticate = async (req, res, next) => {
       createHttpError(401, 'Authorization header must be type Bearer'),
     );
   }
-
   const session = await findSession({ accessToken: token });
   if (!session) {
     return next(createHttpError(401, 'Session not found'));
   }
-
   if (Date.now() > session.accessTokenValidUntil) {
     return next(createHttpError(401, 'Access token expired'));
   }
-
   const user = await findUser({ _id: session.userId });
   if (!user) {
     return next(createHttpError(401, 'User not found'));
   }
-
   req.user = user;
-
   next();
 };

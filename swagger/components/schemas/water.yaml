@@ -1,0 +1,24 @@
+# swagger/components/schemas/water.yaml
+
+type: object
+required:
+  - userId
+  - date
+  - amount
+properties:
+  userId:
+    description: "User's id"
+    type: string
+    example: 12
+  date:
+    description: "User's date"
+    type: number
+    example: '2024-12-10T19:02'
+  amount:
+    description: "User's amount"
+    type: number
+    example: 50
+  curDaylyNorm:
+    description: "User's amount"
+    type: number
+    example: 1500

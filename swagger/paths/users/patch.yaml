@@ -1,0 +1,71 @@
+# swagger/paths/user/patch.yaml
+tags:
+  - Users
+summary: Update card user by id
+operationId: patchUser
+description: 'Patch user by id, and update with payload'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: password
+    schema:
+      type: string
+    example: '123Di@gmail.com'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - password
+        properties:
+          name:
+            description: "User's name"
+            type: string
+            example: 'John Doe'
+          email:
+            description: "User's email"
+            type: string
+            example: 'Lui_Doe123@gmail.com'
+          password:
+            description: "User's password"
+            type: string
+            example: '123Di@gmail.com'
+          gender:
+            description: 'Your gender identify'
+            type: string
+            enum: ['women', 'man']
+          daylyNorm:
+            description: "User's daylyNorm"
+            type: number
+            example: 1800
+          photo:
+            description: "Link to user's photo"
+            type: string
+            format: binary
+responses:
+  '200':
+    description: 'Update user by id'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully upsert user with id !
+            data:
+              type: object
+              $ref: '../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
