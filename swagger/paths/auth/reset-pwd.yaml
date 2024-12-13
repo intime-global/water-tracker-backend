@@ -1,8 +1,8 @@
 tags:
   - Auth
-summary: Register user
-operationId: registerUser
-description: 'Register a user with payload'
+summary: Reset password
+operationId: resetPassword
+description: "Reset a user's password with payload"
 security: []
 requestBody:
   content:
@@ -10,20 +10,20 @@ requestBody:
       schema:
         type: object
         required:
-          - email
           - password
+          - token
         properties:
-          email:
-            description: "User's email"
-            type: string
-            example: kat8@example.com
           password:
-            description: "User's password"
+            description: "User's new password"
             type: string
             example: '123POI. Min 6 characters'
+          token:
+            description: "User's token from url"
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzMzZTU1MWNlZTI4ZGVkYjQ2ZjhlNWMiLCJlbWFpbCI6ImFubmFsYWt1c0B1a3IubmV0IiwiaWF0IjoxNzMxNjIzMjc0LCJleHAiOjE3MzE2MjM1NzR9.KQyctEJouw58BZbNHAiVl-dtFnnRpipb8OHj_hOjGQo
 responses:
-  '201':
-    description: Created a user
+  '200':
+    description: Successfully reset password
     content:
       application/json:
         schema:
@@ -35,16 +35,15 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: User successfully registred
+              example: Password was successfully reset!
             data:
               type: object
-              $ref: ../../components/schemas/user.yaml
   '401':
     $ref: '../../components/responses/401.yaml'
-  '409':
-    $ref: '../../components/responses/409.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
   '500':
     $ref: '../../components/responses/500.yaml'

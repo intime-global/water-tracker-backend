@@ -25,7 +25,7 @@ properties:
     description: 'Your gender identify'
     type: string
     enum: ['women', 'man']
-  daylyNorm:
+  dailyNorm:
     description: "User's daylyNorm"
     type: number
     example: 1800
