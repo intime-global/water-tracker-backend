@@ -1,0 +1,51 @@
+tags:
+  - Auth
+summary: Register or log in a user with Google
+operationId: registerOrLoginWithGoogle
+description: 'Registers a new user or logs in an existing user using Google OAuth'
+security: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            description: 'Authorization code received as a query parameter after successful Google OAuth authentication'
+            type: string
+            example: '4/0AeanS0bQiv-mOEsjZP0msY_zUUCQDV51TLjOyEP1g_myVdlzLZqEDNtxGFZX0vRlIQIaCA'
+responses:
+  '200':
+    description: Successfully logged in or registered a user via Google OAuth
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in via Google OAuth!
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  description: 'JWT access token for authenticated user'
+                  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjEyMzQ1Njc4fQ.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+  '401':
+    description: Unauthorized - Invalid or expired authorization code
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    description: Internal server error
+    $ref: '../../components/responses/500.yaml'
