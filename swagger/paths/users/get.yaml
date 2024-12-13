@@ -46,7 +46,7 @@ requestBody:
           gender:
             description: 'Your gender identify'
             type: string
-            enum: ['women', 'man']
+            enum: ['male','female']
           daylyNorm:
             description: "User's daylyNorm"
             type: number

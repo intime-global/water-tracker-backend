@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const router = Router();
 import {
-  userAllParamsControl,
+  getAllParamsControl,
   patchUserParamsControl,
   patchUserPhotoControl,
 } from '../controllers/users.js';
@@ -14,7 +14,7 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 router.use(authenticate);
 
-router.get('/', ctrlWrapper(userAllParamsControl));
+router.get('/', ctrlWrapper(getAllParamsControl));
 
 router.patch(
   '/',
@@ -28,5 +28,11 @@ router.patch(
   validateBody(updateUsersCard),
   ctrlWrapper(patchUserPhotoControl),
 );
+
+// router.patch(
+//   '/:id',
+//   validateBody(updateUsersCard),
+//   ctrlWrapper(patchAllParamsControl),
+// );
 
 export default router;
