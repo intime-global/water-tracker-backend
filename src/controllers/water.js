@@ -16,8 +16,8 @@ import { UsersCollection } from '../db/models/user.js';
 */
 
 export const createWaterNoteController = async (req, res) => {
-  //   const userId = req.user._id;
-  const userId = '6758cda906bf9963f634acd6';
+  const userId = req.user._id;
+  // const userId = '6758cda906bf9963f634acd6';
   const { date, waterVolume } = req.body;
 
   const waterNote = await createWater({ userId, date, waterVolume });
@@ -35,8 +35,8 @@ export const createWaterNoteController = async (req, res) => {
   |============================
 */
 export const updateWaterNoteController = async (req, res, next) => {
-  //   const userId = req.user._id;
-  const userId = '6758cda906bf9963f634acd6';
+  const userId = req.user._id;
+  // const userId = '6758cda906bf9963f634acd6';
 
   const { waterNoteId: _id } = req.params;
   const payload = { ...req.body };
@@ -62,8 +62,8 @@ export const updateWaterNoteController = async (req, res, next) => {
 */
 
 export const removeWaterNoteController = async (req, res, next) => {
-  //   const userId = req.user._id;
-  const userId = '6758cda906bf9963f634acd6';
+  const userId = req.user._id;
+  // const userId = '6758cda906bf9963f634acd6';
 
   const { waterNoteId: _id } = req.params;
 
@@ -84,10 +84,10 @@ export const removeWaterNoteController = async (req, res, next) => {
 */
 
 export const updateWaterRateController = async (req, res, next) => {
-  // const _id = req.user._id;
+  const _id = req.user._id;
   // const _id = '6758cda906bf9963f634acd6';
 
-  const _id = '6759c583888cc9a0b67e7b82';
+  // const _id = '6759c583888cc9a0b67e7b82';
 
   const { waterRate } = req.body;
 
@@ -114,9 +114,9 @@ export const updateWaterRateController = async (req, res, next) => {
 */
 
 export const getTodayWaterController = async (req, res, next) => {
-  // const _id = req.user._id;
+  const _id = req.user._id;
 
-  const _id = '6758cda906bf9963f634acd6';
+  // const _id = '6758cda906bf9963f634acd6';
 
   const user = await UsersCollection.findOne({ _id });
   if (!user) {
@@ -144,9 +144,9 @@ export const getTodayWaterController = async (req, res, next) => {
 
   const todayNotes = await getTodayWaterNotes({ _id, startOfDay, endOfDay });
 
-  // const waterGoal = req.user.waterRate;
+  const waterGoal = req.user.waterRate;
 
-  const waterGoal = 500;
+  // const waterGoal = 500;
 
   const consumedToday = todayNotes.reduce(
     (acc, note) => acc + note.waterVolume,
