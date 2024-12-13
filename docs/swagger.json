@@ -11,16 +11,13 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
-    },
-    {
-      "url": "https://intime-water-tracker.onrender.com"
+      "url": "https://api.water-tracker.online"
     }
   ],
   "tags": [
     {
       "name": "Users",
-      "description": "Operations about contacts."
+      "description": "Operations about users."
     },
     {
       "name": "Auth",
@@ -700,7 +697,7 @@
         }
       }
     },
-    "/water": {
+    "/waters": {
       "post": {
         "tags": [
           "Water"

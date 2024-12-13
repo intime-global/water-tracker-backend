@@ -46,11 +46,11 @@ paths:
   # POST /auth/confirm-oauth
   # Get /auth/get-oauth-url
   #додаємо всі запити по Water(water)
-  /water:
+  /waters:
     post:
-      $ref: ../swagger/paths/water/post.yaml
+      $ref: ../swagger/paths/waters/post.yaml
     get:
-      $ref: ../swagger/paths/water/get.yaml
+      $ref: ../swagger/paths/waters/get.yaml
 components:
   securitySchemes:
     bearerAuth:
