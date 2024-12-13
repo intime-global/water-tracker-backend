@@ -17,10 +17,17 @@ import { UsersCollection } from '../db/models/user.js';
 
 export const createWaterNoteController = async (req, res) => {
   const userId = req.user._id;
-  // const userId = '6758cda906bf9963f634acd6';
+  const waterRate = req.user.waterRate;
+
   const { date, waterVolume } = req.body;
 
-  const waterNote = await createWater({ userId, date, waterVolume });
+  const [datePart, time] = date.split('T');
+
+  const [year, month, day] = datePart.split('-'); // Розділяємо дату
+
+  const payload = { userId, year, month, day, time, waterVolume, waterRate };
+
+  const waterNote = await createWater(payload);
 
   res.status(201).json({
     status: 201,
@@ -36,10 +43,24 @@ export const createWaterNoteController = async (req, res) => {
 */
 export const updateWaterNoteController = async (req, res, next) => {
   const userId = req.user._id;
-  // const userId = '6758cda906bf9963f634acd6';
 
   const { waterNoteId: _id } = req.params;
-  const payload = { ...req.body };
+
+  let payload = {};
+  let payloadTime = {};
+  let payloadWater = {};
+
+  if (req.body.date) {
+    const [datePart, time] = req.body.date.split('T');
+    const [year, month, day] = datePart.split('-');
+
+    payloadTime = { year, month, day, time };
+  }
+  if (req.body.waterVolume) {
+    payloadWater = { waterVolume: req.body.waterVolume };
+  }
+
+  payload = { ...payloadTime, ...payloadWater };
 
   const updatedWaterNote = await updateWater({ _id, userId, payload });
 
@@ -63,7 +84,6 @@ export const updateWaterNoteController = async (req, res, next) => {
 
 export const removeWaterNoteController = async (req, res, next) => {
   const userId = req.user._id;
-  // const userId = '6758cda906bf9963f634acd6';
 
   const { waterNoteId: _id } = req.params;
 
