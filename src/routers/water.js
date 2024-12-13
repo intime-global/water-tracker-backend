@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
 import {
-  createWaterNoteShcema,
+  createWaterNoteSchema,
   updateWaterNoteShcema,
 } from '../validation/water.js';
 
@@ -19,7 +19,7 @@ const router = Router();
 
 router.post(
   '/',
-  validateBody(createWaterNoteShcema),
+  validateBody(createWaterNoteSchema),
   ctrlWrapper(createWaterNoteController),
 );
 

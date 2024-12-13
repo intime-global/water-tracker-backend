@@ -44,3 +44,12 @@ export const updateWaterRate = async ({ _id, waterRate }) => {
 
   return updatedUser;
 };
+
+export const getTodayWaterNotes = async ({ _id, startOfDay, endOfDay }) => {
+  const waterNotesQueryTod = await WaterNotesCollection.find({ userId: _id })
+    .where('date')
+    .gte(startOfDay)
+    .lte(endOfDay);
+
+  return waterNotesQueryTod;
+};
