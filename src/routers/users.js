@@ -29,10 +29,4 @@ router.patch(
   ctrlWrapper(patchUserPhotoControl),
 );
 
-// router.patch(
-//   '/:id',
-//   validateBody(updateUsersCard),
-//   ctrlWrapper(patchAllParamsControl),
-// );
-
 export default router;

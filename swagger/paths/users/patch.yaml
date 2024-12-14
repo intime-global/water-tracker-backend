@@ -8,17 +8,22 @@ security:
   - bearerAuth: []
 parameters:
   - in: query
-    name: password
+    name: email
+    schema:
+      type: string
+    example: 'Jonni_Do1@gmail.com'
+  - in: query
+    name: oldPassword
     schema:
       type: string
     example: '123Di@gmail.com'
 requestBody:
   content:
-    multipart/form-data:
+     application/json:
       schema:
         type: object
         required:
-          - password
+          - oldPassword
         properties:
           name:
             description: "User's name"
@@ -28,7 +33,11 @@ requestBody:
             description: "User's email"
             type: string
             example: 'Lui_Doe123@gmail.com'
-          password:
+          oldPassword:
+            description: "User's password"
+            type: string
+            example: '123Dima@gmail.com'
+          newPassword:
             description: "User's password"
             type: string
             example: '123Di@gmail.com'

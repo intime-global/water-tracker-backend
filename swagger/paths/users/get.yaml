@@ -6,22 +6,6 @@ operationId: getUser
 description: 'Get user all parameters'
 security:
   - bearerAuth: []
-parameters:
-  - in: query
-    name: name
-    schema:
-      type: string
-    example: 'Jonni'
-  - in: query
-    name: email
-    schema:
-      type: string
-    example: 'Jonni_Do1@gmail.com'
-  - in: query
-    name: daylyNorm
-    schema:
-      type: string
-    example: 1500
 requestBody:
   content:
     application/json:
@@ -29,7 +13,7 @@ requestBody:
         type: object
         required:
           - email
-          - password
+          - oldPassword
         properties:
           name:
             description: "User's name"
@@ -39,15 +23,15 @@ requestBody:
             description: "User's email"
             type: string
             example: 'Lui_Doe123@gmail.com'
-          password:
-            description: "User's password"
+          oldPassword:
+            description: "User's oldPassword"
             type: string
-            example: '123Den'
+            example: '123Deni'
           gender:
             description: 'Your gender identify'
             type: string
             enum: ['male','female']
-          daylyNorm:
+          waterRate:
             description: "User's daylyNorm"
             type: number
             example: 1800
@@ -57,7 +41,7 @@ requestBody:
             format: binary
 responses:
   '200':
-    description: 'Get user by id'
+    description: 'Get all user parameters'
     content:
       application/json:
         schema:
@@ -72,7 +56,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully found user with id 65ca67e7ae7f10c88b598384!
+              example: Successfully found all user parameters!
             data:
               type: object
               $ref: '../../components/schemas/user.yaml'
