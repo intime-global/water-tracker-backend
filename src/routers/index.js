@@ -15,9 +15,9 @@ router.use('/auth', AuthRouter);
 
 router.use(authenticate);
 
-router.use('/users', UsersRouter);
+router.use('/user', UsersRouter);
 
-router.use('/waters', WatersRouter);
+router.use('/water', WatersRouter);
 
 router.use('/waterRate', WaterRateRouter);
 
