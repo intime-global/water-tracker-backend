@@ -10,9 +10,6 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { updateUsersCard } from '../validation/user.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { upload } from '../middlewares/multer.js';
-import { authenticate } from '../middlewares/authenticate.js';
-
-router.use(authenticate);
 
 router.get('/', ctrlWrapper(getAllParamsControl));
 
@@ -28,11 +25,5 @@ router.patch(
   validateBody(updateUsersCard),
   ctrlWrapper(patchUserPhotoControl),
 );
-
-// router.patch(
-//   '/:id',
-//   validateBody(updateUsersCard),
-//   ctrlWrapper(patchAllParamsControl),
-// );
 
 export default router;
