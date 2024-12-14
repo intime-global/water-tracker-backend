@@ -351,62 +351,26 @@
         "summary": "Register user",
         "operationId": "registerUser",
         "description": "Register a user with payload",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string"
-            },
-            "example": "Jonni"
-          },
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            },
-            "example": "Jonni_Do1@gmail.com"
-          },
-          {
-            "in": "query",
-            "name": "password",
-            "schema": {
-              "type": "string"
-            },
-            "example": "111223Jn"
-          }
-        ],
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
-                  "name",
                   "email",
                   "password"
                 ],
                 "properties": {
-                  "name": {
-                    "description": "User's name",
-                    "type": "string",
-                    "example": "John Doe"
-                  },
                   "email": {
                     "description": "User's email",
                     "type": "string",
-                    "example": "John_Doe123@gmail.com"
+                    "example": "kat8@example.com"
                   },
                   "password": {
-                    "description": "password",
+                    "description": "User's password",
                     "type": "string",
-                    "example": "111223Jn"
+                    "example": "123POI. Min 6 characters"
                   }
                 }
               }
@@ -415,7 +379,7 @@
         },
         "responses": {
           "201": {
-            "description": "Creates a user",
+            "description": "Created a user",
             "content": {
               "application/json": {
                 "schema": {
@@ -432,7 +396,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully registered a user!"
+                      "example": "User successfully registred"
                     },
                     "data": {
                       "type": "object",
@@ -445,6 +409,12 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -460,24 +430,6 @@
         "security": [
           {
             "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            },
-            "example": "Jonni_Do1@gmail.com"
-          },
-          {
-            "in": "query",
-            "name": "password",
-            "schema": {
-              "type": "string"
-            },
-            "example": "111223Jn"
           }
         ],
         "requestBody": {
@@ -547,74 +499,29 @@
           "Auth"
         ],
         "summary": "Logout user",
-        "operationId": "logouthUser",
-        "description": "Logout user",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "operationId": "logoutUser",
+        "description": "Logs out the user",
+        "security": [],
         "parameters": [
           {
-            "in": "query",
-            "name": "email",
+            "name": "sessionId",
+            "in": "cookie",
+            "required": true,
             "schema": {
               "type": "string"
             },
-            "example": "Jonni_Do1@gmail.com"
+            "description": "The session ID stored in the cookie used to identify the user's session."
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "email"
-                ],
-                "properties": {
-                  "email": {
-                    "description": "User's email",
-                    "type": "string",
-                    "example": "John_Doe123@gmail.com"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "204": {
-            "description": "Logout user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 204
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully logout user!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "$ref": "#/components/schemas/user"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Logout a user"
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -624,46 +531,33 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Refresh user",
-        "operationId": "refreshUser",
-        "description": "Refresh users token",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "summary": "Refresh token of user",
+        "operationId": "refreshTokenUser",
+        "description": "Refresh the user's access token using the refresh token stored in cookies.",
+        "security": [],
         "parameters": [
           {
-            "in": "query",
-            "name": "email",
+            "name": "sessionId",
+            "in": "cookie",
+            "required": true,
             "schema": {
               "type": "string"
             },
-            "example": "Jonni_Do1@gmail.com"
+            "description": "The session ID stored in the cookie used to identify the user's session."
+          },
+          {
+            "name": "refreshToken",
+            "in": "cookie",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The refresh token stored in cookies"
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "email"
-                ],
-                "properties": {
-                  "email": {
-                    "description": "User's email",
-                    "type": "string",
-                    "example": "John_Doe123@gmail.com"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Refresh users token",
+            "description": "Refreshed a session of user",
             "content": {
               "application/json": {
                 "schema": {
@@ -680,11 +574,19 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully refresh users token!"
+                      "example": "Successfully refreshed a session!"
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "mWv3Qm6b1XJof0rOJSfuZCkuA07zM0fHmWOGYcY9"
+                        }
+                      }
                     }
                   }
                 }
@@ -693,6 +595,303 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/send-reset-email": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send reset email to user",
+        "operationId": "sednRestEmailToUser",
+        "description": "Send email to user to reset password",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "kat8@example.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send reset password email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Reset password email was successfully sent!"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/reset-pwd": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset password",
+        "operationId": "resetPassword",
+        "description": "Reset a user's password with payload",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "password",
+                  "token"
+                ],
+                "properties": {
+                  "password": {
+                    "description": "User's new password",
+                    "type": "string",
+                    "example": "123POI. Min 6 characters"
+                  },
+                  "token": {
+                    "description": "User's token from url",
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzMzZTU1MWNlZTI4ZGVkYjQ2ZjhlNWMiLCJlbWFpbCI6ImFubmFsYWt1c0B1a3IubmV0IiwiaWF0IjoxNzMxNjIzMjc0LCJleHAiOjE3MzE2MjM1NzR9.KQyctEJouw58BZbNHAiVl-dtFnnRpipb8OHj_hOjGQo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully reset password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password was successfully reset!"
+                    },
+                    "data": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/get-oauth-url": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register or log in a user with Google",
+        "operationId": "registerOrLoginWithGoogle",
+        "description": "Registers a new user or logs in an existing user using Google OAuth",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "description": "Authorization code received as a query parameter after successful Google OAuth authentication",
+                    "type": "string",
+                    "example": "4/0AeanS0bQiv-mOEsjZP0msY_zUUCQDV51TLjOyEP1g_myVdlzLZqEDNtxGFZX0vRlIQIaCA"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully logged in or registered a user via Google OAuth",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in via Google OAuth!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "JWT access token for authenticated user",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjEyMzQ1Njc4fQ.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or expired authorization code",
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "description": "Internal server error",
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/confirm-oauth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register or login user with Google",
+        "operationId": "registerUserWithGoogle",
+        "description": "Register or login a user with Google",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "description": "Code from url, that sent to user for login with Google",
+                    "type": "string",
+                    "example": "4/0AeanS0bQiv-mOEsjZP0msY_zUUCQDV51TLjOyEP1g_myVdlzLZqEDNtxGFZX0vRlIQIaCA"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logged a user with Google",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in via Google OAuth!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "YthV5uRTWX61T+U0AHP/F9QyPdeg7xtJMt1QySxb"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -903,7 +1102,7 @@
               "man"
             ]
           },
-          "daylyNorm": {
+          "dailyNorm": {
             "description": "User's daylyNorm",
             "type": "number",
             "example": 1800
@@ -1015,6 +1214,73 @@
                       "example": "User not found"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Email already in use",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Email already in use"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email already in use"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "error"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "InternalServerError"
+                },
+                "error": {
+                  "type": "string",
+                  "description": "Detailed error message for debugging purposes.",
+                  "example": "Unexpected database error occurred"
                 }
               }
             }

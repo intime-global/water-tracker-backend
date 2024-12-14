@@ -2,16 +2,12 @@ import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 import { WaterNotesCollection } from '../db/models/water.js';
 
-export const createWater = async ({ userId, date, waterVolume }) => {
-  const user = await UsersCollection.findOne({ _id: userId });
+export const createWater = async (payload) => {
+  const user = await UsersCollection.findOne({ _id: payload.userId });
 
   if (!user) throw createHttpError(404, 'User not found');
 
-  const waterNote = WaterNotesCollection.create({
-    userId,
-    date,
-    waterVolume,
-  });
+  const waterNote = WaterNotesCollection.create(payload);
 
   return waterNote;
 };
