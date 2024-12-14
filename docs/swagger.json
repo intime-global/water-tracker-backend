@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "Users app",
+    "title": "User app",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -16,7 +16,7 @@
   ],
   "tags": [
     {
-      "name": "Users",
+      "name": "User",
       "description": "Operations about users."
     },
     {
@@ -29,7 +29,7 @@
     }
   ],
   "paths": {
-    "/users": {
+    "/user": {
       "get": {
         "tags": [
           "Users"
@@ -188,7 +188,7 @@
         }
       }
     },
-    "/users/avatar": {
+    "/user/avatar": {
       "patch": {
         "tags": [
           "Users"
