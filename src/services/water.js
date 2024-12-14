@@ -2,6 +2,8 @@ import createHttpError from 'http-errors';
 import { UsersCollection } from '../db/models/user.js';
 import { WaterNotesCollection } from '../db/models/water.js';
 
+import { CURRENT_DATE } from '../constants/waters.js';
+
 export const createWater = async (payload) => {
   const user = await UsersCollection.findOne({ _id: payload.userId });
 
@@ -41,11 +43,27 @@ export const updateWaterRate = async ({ _id, waterRate }) => {
   return updatedUser;
 };
 
-export const getTodayWaterNotes = async ({ _id, startOfDay, endOfDay }) => {
-  const waterNotesQueryTod = await WaterNotesCollection.find({ userId: _id })
-    .where('date')
-    .gte(startOfDay)
-    .lte(endOfDay);
-
+export const getTodayWaterNotes = async ({ _id, year, month, day }) => {
+  const waterNotesQueryTod = await WaterNotesCollection.find({
+    userId: _id,
+    year,
+    month,
+    day,
+  });
+  console.log(waterNotesQueryTod, 'waterNotesQueryTod');
   return waterNotesQueryTod;
+};
+
+export const getMonthWaterNotes = async ({
+  _id,
+  month = CURRENT_DATE.CURRENT_MONTH,
+  year = CURRENT_DATE.CURRENT_YEAR,
+}) => {
+  const monthWaterNotes = await WaterNotesCollection.find({
+    userId: _id,
+    month,
+    year,
+  });
+
+  return monthWaterNotes;
 };
