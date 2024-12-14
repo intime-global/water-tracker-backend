@@ -22,8 +22,6 @@ requestBody:
      application/json:
       schema:
         type: object
-        required:
-          - oldPassword
         properties:
           name:
             description: "User's name"
@@ -33,18 +31,18 @@ requestBody:
             description: "User's email"
             type: string
             example: 'Lui_Doe123@gmail.com'
+          oldPassword:
+            description: "User's oldPassword"
+            type: string
+            example: '123oldPassword'
+          newPassword:
+            description: "User's newPassword"
+            type: string
+            example: '123newPassword'
           gender:
             description: 'Your gender identify'
             type: string
             enum: ['male', 'female']
-          waterRate:
-            description: "User's daylyNorm"
-            type: number
-            example: 1800
-          photo:
-            description: "Link to user's photo"
-            type: string
-            format: binary
 responses:
   '200':
     description: 'Update user by id'

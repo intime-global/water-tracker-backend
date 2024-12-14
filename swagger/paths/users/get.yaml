@@ -6,35 +6,6 @@ operationId: getUser
 description: 'Get user all parameters'
 security:
   - bearerAuth: []
-requestBody:
-  content:
-    application/json:
-      schema:
-        type: object
-        required:
-          - email
-          - oldPassword
-        properties:
-          name:
-            description: "User's name"
-            type: string
-            example: 'Johni Dap'
-          email:
-            description: "User's email"
-            type: string
-            example: 'Lui_Doe123@gmail.com'
-          gender:
-            description: 'Your gender identify'
-            type: string
-            enum: ['male','female']
-          waterRate:
-            description: "User's daylyNorm"
-            type: number
-            example: 1800
-          photo:
-            description: "Link to user's photo"
-            type: string
-            format: binary
 responses:
   '200':
     description: 'Get all user parameters'
