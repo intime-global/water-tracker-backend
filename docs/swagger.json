@@ -97,8 +97,8 @@
                     "description": "Your gender identify",
                     "type": "string",
                     "enum": [
-                      "women",
-                      "man"
+                      "male",
+                      "female"
                     ]
                   },
                   "daylyNorm": {
@@ -204,8 +204,8 @@
                     "description": "Your gender identify",
                     "type": "string",
                     "enum": [
-                      "women",
-                      "man"
+                      "male",
+                      "female"
                     ]
                   },
                   "daylyNorm": {
@@ -896,7 +896,7 @@
         }
       }
     },
-    "/water": {
+    "/waters": {
       "post": {
         "tags": [
           "Water"
