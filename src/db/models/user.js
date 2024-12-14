@@ -17,7 +17,7 @@ const usersSchema = new Schema(
       min: [0, 'Amount of water cannot be negative'],
       max: [15000, 'Amount of water cannot exceed 15 liters'],
     },
-    gender: { type: String, enum: ['woman', 'man'], default: 'woman' },
+    gender: { type: String, enum: ['male', 'female'], default: 'female' },
     photo: { type: String },
   },
   { timestamps: true, versionKey: false },
