@@ -2,12 +2,14 @@
 import createHttpError from 'http-errors';
 import {
   createWater,
+  getMonthWaterNotes,
   getTodayWaterNotes,
   removeWater,
   updateWater,
   updateWaterRate,
 } from '../services/water.js';
 import { UsersCollection } from '../db/models/user.js';
+import { parseDateParams } from '../utils/parseDateParams.js';
 
 /**
   |============================
@@ -105,9 +107,6 @@ export const removeWaterNoteController = async (req, res, next) => {
 
 export const updateWaterRateController = async (req, res, next) => {
   const _id = req.user._id;
-  // const _id = '6758cda906bf9963f634acd6';
-
-  // const _id = '6759c583888cc9a0b67e7b82';
 
   const { waterRate } = req.body;
 
@@ -136,47 +135,80 @@ export const updateWaterRateController = async (req, res, next) => {
 export const getTodayWaterController = async (req, res, next) => {
   const _id = req.user._id;
 
-  // const _id = '6758cda906bf9963f634acd6';
-
   const user = await UsersCollection.findOne({ _id });
   if (!user) {
     next(createHttpError(404, 'User not found'));
     return;
   }
 
-  const today = new Date();
+  const today = new Date().toISOString();
+  const [datePart] = today.split('T');
+  const [year, month, day] = datePart.split('-');
 
-  const startOfDay = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-  ).toISOString();
-
-  const endOfDay = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-    23,
-    59,
-    59,
-    999,
-  ).toISOString();
-
-  const todayNotes = await getTodayWaterNotes({ _id, startOfDay, endOfDay });
+  const todayNotes = await getTodayWaterNotes({ _id, year, month, day });
 
   const waterGoal = req.user.waterRate;
-
-  // const waterGoal = 500;
 
   const consumedToday = todayNotes.reduce(
     (acc, note) => acc + note.waterVolume,
     0,
   );
-  const percentage = (consumedToday * 100) / waterGoal;
+  const percentage = Math.ceil((consumedToday * 100) / waterGoal);
 
   res.status(200).json({
     status: 200,
     message: 'Successfully found notes of water',
     data: { notes: todayNotes, percentage },
   });
+};
+
+/**
+  |============================
+  | get month water controller
+  |============================
+*/
+
+export const getWaterMonthController = async (req, res) => {
+  const _id = req.user._id;
+
+  const { month, year } = parseDateParams(req.query);
+
+  const monthNotes = await getMonthWaterNotes({ _id, month, year });
+
+  let message = 'There are no notes for this month';
+  let result = [];
+
+  if (monthNotes.length) {
+    const resultMonthNotes = monthNotes.reduce((acc, note) => {
+      const existDay = acc.find((item) => item.day === note.day);
+
+      if (existDay) {
+        existDay.waterVolume += note.waterVolume;
+
+        existDay.percentage = Math.round(
+          (existDay.waterVolume * 100) / existDay.waterRate,
+        );
+
+        existDay.waterRate = note.waterRate;
+        existDay.consumedTimes += 1;
+      } else {
+        acc.push({
+          day: note.day,
+          month: note.month,
+          waterVolume: note.waterVolume,
+          waterRate: note.waterRate,
+          consumedTimes: 1,
+          percentage: Math.round((note.waterVolume * 100) / note.waterRate),
+        });
+      }
+
+      return acc;
+    }, []);
+    result = [...resultMonthNotes];
+    message = 'Successfully found water notes';
+
+    res.status(200).json({ status: 200, message, data: result });
+  }
+
+  console.log(monthNotes, 'month notes');
 };
