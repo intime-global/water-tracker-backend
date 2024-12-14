@@ -23,10 +23,6 @@ requestBody:
             description: "User's email"
             type: string
             example: 'Lui_Doe123@gmail.com'
-          oldPassword:
-            description: "User's oldPassword"
-            type: string
-            example: '123Deni'
           gender:
             description: 'Your gender identify'
             type: string

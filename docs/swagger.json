@@ -62,11 +62,6 @@
                     "type": "string",
                     "example": "Lui_Doe123@gmail.com"
                   },
-                  "oldPassword": {
-                    "description": "User's oldPassword",
-                    "type": "string",
-                    "example": "123Deni"
-                  },
                   "gender": {
                     "description": "Your gender identify",
                     "type": "string",
@@ -177,16 +172,6 @@
                     "type": "string",
                     "example": "Lui_Doe123@gmail.com"
                   },
-                  "oldPassword": {
-                    "description": "User's password",
-                    "type": "string",
-                    "example": "123Dima@gmail.com"
-                  },
-                  "newPassword": {
-                    "description": "User's password",
-                    "type": "string",
-                    "example": "123Di@gmail.com"
-                  },
                   "gender": {
                     "description": "Your gender identify",
                     "type": "string",
@@ -195,7 +180,7 @@
                       "female"
                     ]
                   },
-                  "daylyNorm": {
+                  "waterRate": {
                     "description": "User's daylyNorm",
                     "type": "number",
                     "example": 1800
@@ -877,20 +862,15 @@
             "type": "string",
             "example": "Jonni_Do13@gmail.com"
           },
-          "password": {
-            "description": "User's password",
-            "type": "string",
-            "example": "123Den"
-          },
           "gender": {
             "description": "Your gender identify",
             "type": "string",
             "enum": [
-              "women",
-              "man"
+              "male",
+              "female"
             ]
           },
-          "daylyNorm": {
+          "waterRate": {
             "description": "User's daylyNorm",
             "type": "number",
             "example": 1800
