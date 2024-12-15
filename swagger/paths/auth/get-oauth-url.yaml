@@ -1,24 +1,12 @@
 tags:
   - Auth
-summary: Register or log in a user with Google
-operationId: registerOrLoginWithGoogle
-description: 'Registers a new user or logs in an existing user using Google OAuth'
+summary: Generate Google OAuth URL
+operationId: getGoogleOAuthUrl
+description: 'Generates a Google OAuth URL to redirect users for authentication'
 security: []
-requestBody:
-  content:
-    application/json:
-      schema:
-        type: object
-        required:
-          - code
-        properties:
-          code:
-            description: 'Authorization code received as a query parameter after successful Google OAuth authentication'
-            type: string
-            example: '4/0AeanS0bQiv-mOEsjZP0msY_zUUCQDV51TLjOyEP1g_myVdlzLZqEDNtxGFZX0vRlIQIaCA'
 responses:
   '200':
-    description: Successfully logged in or registered a user via Google OAuth
+    description: Successfully generated Google OAuth URL
     content:
       application/json:
         schema:
@@ -33,16 +21,16 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully logged in via Google OAuth!
+              example: 'Successfully get Google OAuth url!'
             data:
               type: object
               required:
-                - accessToken
+                - url
               properties:
-                accessToken:
+                url:
                   type: string
-                  description: 'JWT access token for authenticated user'
-                  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjEyMzQ1Njc4fQ.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+                  description: 'Google OAuth URL to be used for redirecting users to authentication'
+                  example: 'https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=your-client-id&redirect_uri=https://your-redirect-uri&scope=https://www.googleapis.com/auth/userinfo.email'
   '401':
     description: Unauthorized - Invalid or expired authorization code
     $ref: '../../components/responses/401.yaml'
