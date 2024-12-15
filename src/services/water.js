@@ -50,7 +50,7 @@ export const getTodayWaterNotes = async ({ _id, year, month, day }) => {
     month,
     day,
   });
-  console.log(waterNotesQueryTod, 'waterNotesQueryTod');
+
   return waterNotesQueryTod;
 };
 
