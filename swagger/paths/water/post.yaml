@@ -1,0 +1,48 @@
+# post - new card
+tags:
+  - Water
+summary: Create WaterNote
+operationId: postWaterNote
+description: 'Create a WaterNote with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - date
+          - waterVolume
+        properties:
+          date:
+            description: 'The date the WaterNote created'
+            type: string
+            example: '2024-12-10T19:02:23'
+          waterVolume:
+            description: 'Еhe amount of water consumed by user'
+            type: number
+            example: 250
+responses:
+  '201':
+    description: Creates a water card
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully create a water note!'
+            data:
+              type: object
+              $ref: '../../components/schemas/water.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

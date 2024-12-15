@@ -4,11 +4,11 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: User app
+  title: Water tracker app
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: This is a documentation of users app
+  description: This is a documentation of Water tracker app
 tags:
   - name: User
     description: Operations about users.
@@ -54,11 +54,24 @@ paths:
     post:
       $ref: ../swagger/paths/auth/confirm-oauth.yaml
   #додаємо всі запити по Water(water)
-  /waters:
+  /water:
     post:
-      $ref: ../swagger/paths/waters/post.yaml
+      $ref: ../swagger/paths/water/post.yaml
+  /water/:waterNoteId:
+    patch:
+      $ref: ../swagger/paths/water/patch.yaml
+  /water/:waterNoteId:
+    delete:
+      $ref: ../swagger/paths/water/delete.yaml
+  /waterRate:
+    patch:
+      $ref: ../swagger/paths/waterRate/patch.yaml
+  /waterToday:
     get:
-      $ref: ../swagger/paths/waters/get.yaml
+      $ref: ../swagger/paths/waterToday/get.yaml
+  /waterMonth:
+    get:
+      $ref: ../swagger/paths/waterMonth/get.yaml
 components:
   securitySchemes:
     bearerAuth:
