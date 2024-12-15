@@ -4,13 +4,13 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Users app
+  title: User app
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of users app
 tags:
-  - name: Users
+  - name: User
     description: Operations about users.
   - name: Auth
     description: Auth operations.
@@ -19,16 +19,16 @@ tags:
 servers:
   - url: https://api.water-tracker.online
 paths:
-  #додаємо get  всих users
-  /users:
+  #додаємо запити по user
+  /user:
     get:
-      $ref: ../swagger/paths/users/get.yaml
+      $ref: ../swagger/paths/user/get.yaml
     patch:
-      $ref: ../swagger/paths/users/patch.yaml
-  /users/avatar:
+      $ref: ../swagger/paths/user/patch.yaml
+  /user/avatar:
     patch:
-      $ref: ../swagger/paths/users/avatar/patch.yaml
-  #додаємо всі запити по Юзеру(auth)
+      $ref: ../swagger/paths/user/avatar/patch.yaml
+  #додаємо всі запити по auth
   /auth/register:
     post:
       $ref: ../swagger/paths/auth/register.yaml
@@ -53,10 +53,6 @@ paths:
   /auth/confirm-oauth:
     post:
       $ref: ../swagger/paths/auth/confirm-oauth.yaml
-  # POST /auth/send-reset-email
-  # POST /auth/reset-pwd
-  # POST /auth/confirm-oauth
-  # Get /auth/get-oauth-url
   #додаємо всі запити по Water(water)
   /waters:
     post:

@@ -22,6 +22,6 @@ export const updateUsersCard = Joi.object({
     'string.max': 'password should have at most {#limit} characters',
   }),
   gender: Joi.string().valid(...genderEnum),
-  waterRate: Joi.number().min(50).max(15000),
+  waterRate: Joi.number(),
   photo: Joi.string(),
 });

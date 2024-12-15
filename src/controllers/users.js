@@ -35,28 +35,11 @@ export const getAllParamsControl = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    message: `Successfully found user with id ${_id}!`,
+    message: `Successfully found all user parameters!`,
     data: user,
   });
 };
 
-export const patchAllParamsControl = async (req, res, next) => {
-  const userId = req.user._id;
-  const { _id } = req.params;
-
-  const resultPatch = await updateUserById(_id, userId, {
-    ...req.body,
-  });
-  if (!resultPatch) {
-    next(createHttpError(404, 'User not found'));
-    return;
-  }
-  res.json({
-    status: 200,
-    massage: 'Successfully patched a user!',
-    data: resultPatch.user,
-  });
-};
 // функція оновлення юзера
 
 export const patchUserParamsControl = async (req, res, next) => {

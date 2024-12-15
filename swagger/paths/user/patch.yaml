@@ -8,17 +8,20 @@ security:
   - bearerAuth: []
 parameters:
   - in: query
-    name: password
+    name: email
+    schema:
+      type: string
+    example: 'Jonni_Do1@gmail.com'
+  - in: query
+    name: oldPassword
     schema:
       type: string
     example: '123Di@gmail.com'
 requestBody:
   content:
-    multipart/form-data:
+     application/json:
       schema:
         type: object
-        required:
-          - password
         properties:
           name:
             description: "User's name"
@@ -28,22 +31,18 @@ requestBody:
             description: "User's email"
             type: string
             example: 'Lui_Doe123@gmail.com'
-          password:
-            description: "User's password"
+          oldPassword:
+            description: "User's oldPassword"
             type: string
-            example: '123Di@gmail.com'
+            example: '123oldPassword'
+          newPassword:
+            description: "User's newPassword"
+            type: string
+            example: '123newPassword'
           gender:
             description: 'Your gender identify'
             type: string
             enum: ['male', 'female']
-          daylyNorm:
-            description: "User's daylyNorm"
-            type: number
-            example: 1800
-          photo:
-            description: "Link to user's photo"
-            type: string
-            format: binary
 responses:
   '200':
     description: 'Update user by id'
