@@ -13,7 +13,7 @@ const usersSchema = new Schema(
     password: { type: String, required: true },
     waterRate: {
       type: Number,
-      default: 1500,
+      default: 2000,
       min: [0, 'Amount of water cannot be negative'],
       max: [15000, 'Amount of water cannot exceed 15 liters'],
     },
@@ -35,4 +35,4 @@ usersSchema.pre('findOneAndUpdate', setupUpdateValidator);
 
 usersSchema.post('findOneAndUpdate', handleSaveError);
 
-export const UsersCollection = model('users', usersSchema);
+export const UsersCollection = model('user', usersSchema);

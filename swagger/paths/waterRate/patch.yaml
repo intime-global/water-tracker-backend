@@ -1,0 +1,44 @@
+tags:
+  - Water
+summary: Patch WaterRate of user
+operationId: patchWaterRate
+description: 'Patch WaterRate of user'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          waterRate:
+            description: 'Planned daily rate of water consumption for the user'
+            type: number
+            example: '2000'
+responses:
+  '200':
+    description: "Successfully updated user's waterRate!"
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: "Successfully updated user's waterRate!"
+            data:
+              type: object
+              $ref: '../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

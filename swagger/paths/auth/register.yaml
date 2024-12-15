@@ -58,7 +58,7 @@ responses:
                   description: 'Your gender identify'
                   type: string
                   enum: ['female', 'male']
-                dailyNorm:
+                waterRate:
                   description: "User's daylyNorm"
                   type: number
                   example: 1800

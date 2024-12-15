@@ -1,17 +1,11 @@
 # swagger/paths/user/avatar/patch.yaml
 tags:
-  - Users
+  - User
 summary: Update card user avatar
 operationId: patchUserAvatar
 description: 'Patch user avatar, and update with payload'
 security:
   - bearerAuth: []
-parameters:
-  - in: query
-    name: photo
-    schema:
-      type: string
-    example: binary
 requestBody:
   content:
     multipart/form-data:
