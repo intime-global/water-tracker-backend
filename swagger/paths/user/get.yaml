@@ -1,6 +1,6 @@
 # get
 tags:
-  - Users
+  - User
 summary: Get user all parameters
 operationId: getUser
 description: 'Get user all parameters'

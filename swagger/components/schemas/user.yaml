@@ -35,10 +35,10 @@ properties:
     type: string
     example: https://res.cloudinary.com/uqwgdu/image/upload/image.png
   createdAt:
-    description: 'The date the User's card was created'
+    description: "The date the User's card was created"
     type: string
     example: '2024-12-13T01:54:18.925Z'
   updatedAt:
-    description: 'The date the User's card was updated'
+    description: "The date the User's card was updated"
     type: string
     example: '2024-12-15T01:19:29.980Z'

@@ -1,6 +1,6 @@
 tags:
   - Water
-summary: Get a list of WaterNotes
+summary: Get a list of WaterNotes for one day
 operationId: getWaterNotes
 description: 'Get a list of notes of water consumption for one day'
 security:
