@@ -57,21 +57,20 @@ paths:
   /water:
     post:
       $ref: ../swagger/paths/water/post.yaml
-  /water/:waterNoteId:
+  /water/{waterNoteId}:
     patch:
-      $ref: ../swagger/paths/water/patch.yaml
-  /water/:waterNoteId:
+      $ref: ../swagger/paths/water/{waterNoteId}/patch.yaml
     delete:
-      $ref: ../swagger/paths/water/delete.yaml
+      $ref: ../swagger/paths/water/{waterNoteId}/delete.yaml
   /waterRate:
     patch:
       $ref: ../swagger/paths/waterRate/patch.yaml
   /waterToday:
     get:
       $ref: ../swagger/paths/waterToday/get.yaml
-  /waterMonth:
-    get:
-      $ref: ../swagger/paths/waterMonth/get.yaml
+  # /waterMonth:
+  #   get:
+  #     $ref: ../swagger/paths/waterMonth/get.yaml
 components:
   securitySchemes:
     bearerAuth:

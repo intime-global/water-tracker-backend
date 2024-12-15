@@ -17,7 +17,7 @@ requestBody:
             example: '2000'
 responses:
   '200':
-    description: 'Successfully updated user's waterRate!'
+    description: "Successfully updated user's waterRate!"
     content:
       application/json:
         schema:
@@ -32,13 +32,13 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully updated user's waterRate!'
+              example: "Successfully updated user's waterRate!"
             data:
               type: object
-              $ref: '../../../components/schemas/user.yaml'
+              $ref: '../../components/schemas/user.yaml'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: '../../components/responses/401.yaml'
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    $ref: '../../components/responses/404.yaml'
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: '../../components/responses/500.yaml'

@@ -1,25 +1,14 @@
 # swagger/paths/user/patch.yaml
 tags:
-  - Users
+  - User
 summary: Update card user by id
 operationId: patchUser
 description: 'Patch user by id, and update with payload'
 security:
   - bearerAuth: []
-parameters:
-  - in: query
-    name: email
-    schema:
-      type: string
-    example: 'Jonni_Do1@gmail.com'
-  - in: query
-    name: oldPassword
-    schema:
-      type: string
-    example: '123Di@gmail.com'
 requestBody:
   content:
-     application/json:
+    application/json:
       schema:
         type: object
         properties:
