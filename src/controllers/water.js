@@ -209,6 +209,4 @@ export const getWaterMonthController = async (req, res) => {
 
     res.status(200).json({ status: 200, message, data: result });
   }
-
-  console.log(monthNotes, 'month notes');
 };
