@@ -10,6 +10,8 @@ requestBody:
     application/json:
       schema:
         type: object
+        required:
+          - waterRate
         properties:
           waterRate:
             description: 'Planned daily rate of water consumption for the user'
