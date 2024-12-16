@@ -354,11 +354,7 @@
         "summary": "Login a user",
         "operationId": "loginUser",
         "description": "Login a user with payload",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
