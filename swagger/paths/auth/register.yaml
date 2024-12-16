@@ -18,9 +18,9 @@ requestBody:
             type: string
             example: kat8@example.com
           password:
-            description: "User's password"
+            description: "User's password. Min 8 characters, max 64 characters"
             type: string
-            example: '123POI. Min 8 characters, max 64 characters'
+            example: '123POIOI'
 responses:
   '201':
     description: Created a user
