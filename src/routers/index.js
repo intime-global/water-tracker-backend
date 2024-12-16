@@ -7,13 +7,9 @@ import WaterRateRouter from './waterRate.js';
 import WaterTodayRouter from './waterToday.js';
 import WaterMonthRouter from './waterMonth.js';
 
-import { authenticate } from '../middlewares/authenticate.js';
-
 const router = Router();
 
 router.use('/auth', AuthRouter);
-
-router.use(authenticate);
 
 router.use('/user', UsersRouter);
 
