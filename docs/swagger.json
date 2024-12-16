@@ -2,12 +2,12 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "User app",
+    "title": "Water tracker app",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "This is a documentation of users app"
+    "description": "This is a documentation of Water tracker app"
   },
   "servers": [
     {
@@ -32,7 +32,7 @@
     "/user": {
       "get": {
         "tags": [
-          "Users"
+          "User"
         ],
         "summary": "Get user all parameters",
         "operationId": "getUser",
@@ -82,7 +82,7 @@
       },
       "patch": {
         "tags": [
-          "Users"
+          "User"
         ],
         "summary": "Update card user by id",
         "operationId": "patchUser",
@@ -90,24 +90,6 @@
         "security": [
           {
             "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            },
-            "example": "Jonni_Do1@gmail.com"
-          },
-          {
-            "in": "query",
-            "name": "oldPassword",
-            "schema": {
-              "type": "string"
-            },
-            "example": "123Di@gmail.com"
           }
         ],
         "requestBody": {
@@ -191,7 +173,7 @@
     "/user/avatar": {
       "patch": {
         "tags": [
-          "Users"
+          "User"
         ],
         "summary": "Update card user avatar",
         "operationId": "patchUserAvatar",
@@ -286,7 +268,7 @@
                   "password": {
                     "description": "User's password",
                     "type": "string",
-                    "example": "123POI. Min 6 characters"
+                    "example": "123POI. Min 8 characters, max 64 characters"
                   }
                 }
               }
@@ -316,7 +298,36 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "properties": {
+                        "_id": {
+                          "description": "User's id",
+                          "type": "string",
+                          "example": "65e4decdd286b30065d54af9"
+                        },
+                        "name": {
+                          "description": "User's name",
+                          "type": "string",
+                          "example": "Anonymous"
+                        },
+                        "email": {
+                          "description": "User's email",
+                          "type": "string",
+                          "example": "Jonni_Do13@gmail.com"
+                        },
+                        "gender": {
+                          "description": "Your gender identify",
+                          "type": "string",
+                          "enum": [
+                            "female",
+                            "male"
+                          ]
+                        },
+                        "waterRate": {
+                          "description": "User's daylyNorm",
+                          "type": "number",
+                          "example": 1800
+                        }
+                      }
                     }
                   }
                 }
@@ -664,32 +675,13 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Register or log in a user with Google",
-        "operationId": "registerOrLoginWithGoogle",
-        "description": "Registers a new user or logs in an existing user using Google OAuth",
+        "summary": "Generate Google OAuth URL",
+        "operationId": "getGoogleOAuthUrl",
+        "description": "Generates a Google OAuth URL to redirect users for authentication",
         "security": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "code"
-                ],
-                "properties": {
-                  "code": {
-                    "description": "Authorization code received as a query parameter after successful Google OAuth authentication",
-                    "type": "string",
-                    "example": "4/0AeanS0bQiv-mOEsjZP0msY_zUUCQDV51TLjOyEP1g_myVdlzLZqEDNtxGFZX0vRlIQIaCA"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Successfully logged in or registered a user via Google OAuth",
+            "description": "Successfully generated Google OAuth URL",
             "content": {
               "application/json": {
                 "schema": {
@@ -706,18 +698,18 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully logged in via Google OAuth!"
+                      "example": "Successfully get Google OAuth url!"
                     },
                     "data": {
                       "type": "object",
                       "required": [
-                        "accessToken"
+                        "url"
                       ],
                       "properties": {
-                        "accessToken": {
+                        "url": {
                           "type": "string",
-                          "description": "JWT access token for authenticated user",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNjEyMzQ1Njc4fQ.sflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                          "description": "Google OAuth URL to be used for redirecting users to authentication",
+                          "example": "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=your-client-id&redirect_uri=https://your-redirect-uri&scope=https://www.googleapis.com/auth/userinfo.email"
                         }
                       }
                     }
@@ -812,14 +804,14 @@
         }
       }
     },
-    "/waters": {
+    "/water": {
       "post": {
         "tags": [
           "Water"
         ],
-        "summary": "Create WaterCard",
-        "operationId": "postWaterCard",
-        "description": "Create a WaterCard with payload",
+        "summary": "Create WaterNote",
+        "operationId": "postWaterNote",
+        "description": "Create a WaterNote with payload",
         "security": [
           {
             "bearerAuth": []
@@ -832,38 +824,18 @@
                 "type": "object",
                 "required": [
                   "date",
-                  "amount"
+                  "waterVolume"
                 ],
                 "properties": {
                   "date": {
-                    "description": "User's date",
-                    "type": "number",
-                    "example": "2024-12-10T19:02"
+                    "description": "The date the WaterNote created",
+                    "type": "string",
+                    "example": "2024-12-10T19:02:23"
                   },
-                  "amount": {
-                    "description": "User's water amount",
+                  "waterVolume": {
+                    "description": "Еhe amount of water consumed by user",
                     "type": "number",
-                    "example": 50
-                  },
-                  "daylyNorm": {
-                    "description": "User's daylyNorm water",
-                    "type": "number",
-                    "example": 1500
-                  },
-                  "servings": {
-                    "description": "User's servings",
-                    "type": "number",
-                    "example": 50
-                  },
-                  "planDaylyNorm": {
-                    "description": "User's planDaylyNorm",
-                    "type": "number",
-                    "example": 1800
-                  },
-                  "curDaylyNorm": {
-                    "description": "User's curDaylyNorm",
-                    "type": "number",
-                    "example": 100
+                    "example": 250
                   }
                 }
               }
@@ -889,7 +861,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully created a water card!"
+                      "example": "Successfully create a water note!"
                     },
                     "data": {
                       "type": "object",
@@ -904,14 +876,16 @@
             "$ref": "#/components/responses/401"
           }
         }
-      },
-      "get": {
+      }
+    },
+    "/water/{waterNoteId}": {
+      "patch": {
         "tags": [
           "Water"
         ],
-        "summary": "Get All waters card",
-        "operationId": "getWater",
-        "description": "Get All waters",
+        "summary": "Patch waterNote by id",
+        "operationId": "patchWaterNote",
+        "description": "Patch WaterNote by id",
         "security": [
           {
             "bearerAuth": []
@@ -919,25 +893,39 @@
         ],
         "parameters": [
           {
-            "in": "query",
-            "name": "page",
+            "in": "path",
+            "name": "waterNoteId",
+            "required": true,
             "schema": {
-              "type": "integer"
-            },
-            "example": 1
-          },
-          {
-            "in": "query",
-            "name": "perPage",
-            "schema": {
-              "type": "integer",
-              "example": 10
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "description": "Date of WaterNote",
+                    "type": "string",
+                    "example": "2024-12-15T14:23:12"
+                  },
+                  "waterVolume": {
+                    "description": "The amount of water consumed",
+                    "type": "number",
+                    "example": "130"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Get All waters",
+            "description": "Successfully updated a waterNote!",
             "content": {
               "application/json": {
                 "schema": {
@@ -954,7 +942,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found waters card !"
+                      "example": "Successfully updated a waterNote!"
                     },
                     "data": {
                       "type": "object",
@@ -970,6 +958,300 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete WaterNote by id",
+        "operationId": "deleteWaterNote",
+        "description": "Delete WaterNote by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "waterNoteId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Delete WaterNote by id"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waterRate": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Patch WaterRate of user",
+        "operationId": "patchWaterRate",
+        "description": "Patch WaterRate of user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "waterRate"
+                ],
+                "properties": {
+                  "waterRate": {
+                    "description": "Planned daily rate of water consumption for the user",
+                    "type": "number",
+                    "example": "2000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated user's waterRate!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated user's waterRate!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waterToday": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get a list of WaterNotes for one day",
+        "operationId": "getWaterNotes",
+        "description": "Get a list of notes of water consumption for one day",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found notes of water!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found notes of water!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "notes",
+                        "percentage"
+                      ],
+                      "properties": {
+                        "notes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/water"
+                          }
+                        },
+                        "percentage": {
+                          "type": "number",
+                          "example": 60
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/waterMonth": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get a list of WaterNotes for one month",
+        "operationId": "getWaterNotesMonth",
+        "description": "Get a list of notes of water consumption for one month",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 12
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer",
+              "example": 2024
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully found water notes!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found water notes!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "day",
+                          "month",
+                          "waterVolume",
+                          "waterRate",
+                          "consumedTimes",
+                          "percentage"
+                        ],
+                        "properties": {
+                          "day": {
+                            "description": "The date of the month for which the rwater notes were received",
+                            "type": "string",
+                            "example": "11"
+                          },
+                          "month": {
+                            "description": "The month for which the water notes were received",
+                            "type": "string",
+                            "example": "12"
+                          },
+                          "waterVolume": {
+                            "description": "Volume of water consumed for the selected day",
+                            "type": "number",
+                            "example": 900
+                          },
+                          "waterRate": {
+                            "description": "Rate of water consumption",
+                            "type": "number",
+                            "example": 1500
+                          },
+                          "consumedTimes": {
+                            "description": "Number of water consumption notes for the selected day",
+                            "type": "number",
+                            "example": 5
+                          },
+                          "percentage": {
+                            "description": "The percentage of fulfillment of the daily norm",
+                            "type": "number",
+                            "example": 60
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -986,8 +1268,13 @@
       "user": {
         "type": "object",
         "required": [
+          "_id",
+          "name",
           "email",
-          "password"
+          "gender",
+          "waterRate",
+          "createdAt",
+          "updatedAt"
         ],
         "properties": {
           "_id": {
@@ -1022,36 +1309,83 @@
             "description": "Link to user's photo or avatar",
             "type": "string",
             "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
+          },
+          "createdAt": {
+            "description": "The date the User's card was created",
+            "type": "string",
+            "example": "2024-12-13T01:54:18.925Z"
+          },
+          "updatedAt": {
+            "description": "The date the User's card was updated",
+            "type": "string",
+            "example": "2024-12-15T01:19:29.980Z"
           }
         }
       },
       "water": {
         "type": "object",
         "required": [
+          "_id",
           "userId",
-          "date",
-          "amount"
+          "year",
+          "month",
+          "day",
+          "time",
+          "waterRate",
+          "waterVolume",
+          "createdAt",
+          "updatedAt"
         ],
         "properties": {
+          "_id": {
+            "description": "WaterNote's id",
+            "type": "string",
+            "example": "675b93cab74997639d8e7476"
+          },
           "userId": {
             "description": "User's id",
             "type": "string",
-            "example": 12
+            "example": "675b8d979f14991c4126ba15"
           },
-          "date": {
-            "description": "User's date",
-            "type": "number",
-            "example": "2024-12-10T19:02"
+          "year": {
+            "description": "Year of WaterNote",
+            "type": "string",
+            "example": "2024"
           },
-          "amount": {
-            "description": "User's amount",
-            "type": "number",
-            "example": 50
+          "month": {
+            "description": "Month of WaterNote",
+            "type": "string",
+            "example": "12"
           },
-          "curDaylyNorm": {
-            "description": "User's amount",
+          "day": {
+            "description": "Day of WaterNote",
+            "type": "string",
+            "example": "14"
+          },
+          "time": {
+            "description": "Time of WaterNote",
+            "type": "string",
+            "example": "11:15:05"
+          },
+          "waterRate": {
+            "description": "Current daily rate for user",
             "type": "number",
-            "example": 1500
+            "example": 2000
+          },
+          "waterVolume": {
+            "description": "Volume of water consumed",
+            "type": "number",
+            "example": 250
+          },
+          "createdAt": {
+            "description": "The date the WaterNote was created",
+            "type": "string",
+            "example": "2024-12-13T01:54:18.925Z"
+          },
+          "updatedAt": {
+            "description": "The date the WaterNote was updated",
+            "type": "string",
+            "example": "2024-12-15T01:19:29.980Z"
           }
         }
       }

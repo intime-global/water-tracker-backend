@@ -177,9 +177,10 @@ export const getWaterMonthController = async (req, res) => {
 
   let message = 'There are no notes for this month';
   let result = [];
+  let resultMonthNotes = [];
 
-  if (monthNotes.length) {
-    const resultMonthNotes = monthNotes.reduce((acc, note) => {
+  if (monthNotes.length > 0) {
+    resultMonthNotes = monthNotes.reduce((acc, note) => {
       const existDay = acc.find((item) => item.day === note.day);
 
       if (existDay) {
@@ -202,11 +203,12 @@ export const getWaterMonthController = async (req, res) => {
         });
       }
 
+      message = 'Successfully found water notes!';
+
       return acc;
     }, []);
-    result = [...resultMonthNotes];
-    message = 'Successfully found water notes';
-
-    res.status(200).json({ status: 200, message, data: result });
   }
+  result = [...resultMonthNotes];
+
+  res.status(200).json({ status: 200, message, data: result });
 };

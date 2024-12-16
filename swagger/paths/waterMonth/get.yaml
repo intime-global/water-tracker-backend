@@ -1,0 +1,76 @@
+tags:
+  - Water
+summary: Get a list of WaterNotes for one month
+operationId: getWaterNotesMonth
+description: 'Get a list of notes of water consumption for one month'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: month
+    schema:
+      type: integer
+    example: 12
+  - in: query
+    name: year
+    schema:
+      type: integer
+      example: 2024
+responses:
+  '200':
+    description: 'Successfully found water notes!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully found water notes!'
+            data:
+              type: array
+              items:
+                type: object
+                required:
+                  - day
+                  - month
+                  - waterVolume
+                  - waterRate
+                  - consumedTimes
+                  - percentage
+                properties:
+                  day:
+                    description: 'The date of the month for which the rwater notes were received'
+                    type: string
+                    example: '11'
+                  month:
+                    description: 'The month for which the water notes were received'
+                    type: string
+                    example: '12'
+                  waterVolume:
+                    description: 'Volume of water consumed for the selected day'
+                    type: number
+                    example: 900
+                  waterRate:
+                    description: 'Rate of water consumption'
+                    type: number
+                    example: 1500
+                  consumedTimes:
+                    description: 'Number of water consumption notes for the selected day'
+                    type: number
+                    example: 5
+                  percentage:
+                    description: 'The percentage of fulfillment of the daily norm'
+                    type: number
+                    example: 60
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'
