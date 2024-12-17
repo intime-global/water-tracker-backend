@@ -266,9 +266,11 @@
                     "example": "kat8@example.com"
                   },
                   "password": {
-                    "description": "User's password",
+                    "description": "password",
                     "type": "string",
-                    "example": "123POI. Min 8 characters, max 64 characters"
+                    "example": "111223Jn",
+                    "minLength": 8,
+                    "maxLength": 64
                   }
                 }
               }
@@ -297,37 +299,7 @@
                       "example": "User successfully registred"
                     },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "description": "User's id",
-                          "type": "string",
-                          "example": "65e4decdd286b30065d54af9"
-                        },
-                        "name": {
-                          "description": "User's name",
-                          "type": "string",
-                          "example": "Anonymous"
-                        },
-                        "email": {
-                          "description": "User's email",
-                          "type": "string",
-                          "example": "Jonni_Do13@gmail.com"
-                        },
-                        "gender": {
-                          "description": "Your gender identify",
-                          "type": "string",
-                          "enum": [
-                            "female",
-                            "male"
-                          ]
-                        },
-                        "waterRate": {
-                          "description": "User's daylyNorm",
-                          "type": "number",
-                          "example": 1800
-                        }
-                      }
+                      "type": "object"
                     }
                   }
                 }
@@ -373,7 +345,9 @@
                   "password": {
                     "description": "password",
                     "type": "string",
-                    "example": "111223Jn"
+                    "example": "111223Jn",
+                    "minLength": 8,
+                    "maxLength": 64
                   }
                 }
               }
@@ -458,26 +432,6 @@
         "operationId": "refreshTokenUser",
         "description": "Refresh the user's access token using the refresh token stored in cookies.",
         "security": [],
-        "parameters": [
-          {
-            "name": "sessionId",
-            "in": "cookie",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The session ID stored in the cookie used to identify the user's session."
-          },
-          {
-            "name": "refreshToken",
-            "in": "cookie",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The refresh token stored in cookies"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Refreshed a session of user",
@@ -611,9 +565,11 @@
                 ],
                 "properties": {
                   "password": {
-                    "description": "User's new password",
+                    "description": "User new password",
                     "type": "string",
-                    "example": "123POI. Min 6 characters"
+                    "example": "111223Jn",
+                    "minLength": 8,
+                    "maxLength": 64
                   },
                   "token": {
                     "description": "User's token from url",
@@ -720,81 +676,6 @@
           },
           "500": {
             "description": "Internal server error",
-            "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
-    "/auth/confirm-oauth": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Register or login user with Google",
-        "operationId": "registerUserWithGoogle",
-        "description": "Register or login a user with Google",
-        "security": [],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "code"
-                ],
-                "properties": {
-                  "code": {
-                    "description": "Code from url, that sent to user for login with Google",
-                    "type": "string",
-                    "example": "4/0AeanS0bQiv-mOEsjZP0msY_zUUCQDV51TLjOyEP1g_myVdlzLZqEDNtxGFZX0vRlIQIaCA"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Logged a user with Google",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully logged in via Google OAuth!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "accessToken"
-                      ],
-                      "properties": {
-                        "accessToken": {
-                          "type": "string",
-                          "example": "YthV5uRTWX61T+U0AHP/F9QyPdeg7xtJMt1QySxb"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "500": {
             "$ref": "#/components/responses/500"
           }
         }
@@ -1147,7 +1028,7 @@
         ],
         "summary": "Get a list of WaterNotes for one month",
         "operationId": "getWaterNotesMonth",
-        "description": "Get a list of notes of water consumption for one month",
+        "description": "Get a list of notes of water consumption for the selected month. If parameters are not passed, the request by default returns a list for the current month of the current year.",
         "security": [
           {
             "bearerAuth": []
@@ -1297,7 +1178,7 @@
             ]
           },
           "waterRate": {
-            "description": "User's daylyNorm",
+            "description": "User's dailyNorma",
             "type": "number",
             "example": 1800
           },
