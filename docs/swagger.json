@@ -29,7 +29,7 @@
     }
   ],
   "paths": {
-    "/user": {
+    "/users": {
       "get": {
         "tags": [
           "User"
@@ -170,7 +170,7 @@
         }
       }
     },
-    "/user/avatar": {
+    "/users/avatar": {
       "patch": {
         "tags": [
           "User"
@@ -266,9 +266,9 @@
                     "example": "kat8@example.com"
                   },
                   "password": {
-                    "description": "User's password",
+                    "description": "User's password. Min 8 characters, max 64 characters",
                     "type": "string",
-                    "example": "123POI. Min 8 characters, max 64 characters"
+                    "example": "123POIOI"
                   }
                 }
               }
@@ -354,11 +354,7 @@
         "summary": "Login a user",
         "operationId": "loginUser",
         "description": "Login a user with payload",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -617,7 +613,7 @@
                   "password": {
                     "description": "User's new password",
                     "type": "string",
-                    "example": "123POI. Min 6 characters"
+                    "example": "qweqwe12 Min 8 characters, maximum 64 characters"
                   },
                   "token": {
                     "description": "User's token from url",
@@ -1151,7 +1147,7 @@
         ],
         "summary": "Get a list of WaterNotes for one month",
         "operationId": "getWaterNotesMonth",
-        "description": "Get a list of notes of water consumption for one month",
+        "description": "Get a list of notes of water consumption for the selected month. If parameters are not passed, the request by default returns a list for the current month of the current year.",
         "security": [
           {
             "bearerAuth": []

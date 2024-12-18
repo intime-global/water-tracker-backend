@@ -14,9 +14,9 @@ requestBody:
           - token
         properties:
           password:
-            description: "User's new password"
+            description: "User's new password. Min 8 characters, maximum 64 characters"
             type: string
-            example: '123POI. Min 6 characters'
+            example: 'qweqwe12'
           token:
             description: "User's token from url"
             type: string
