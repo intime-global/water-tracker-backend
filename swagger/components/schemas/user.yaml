@@ -27,7 +27,7 @@ properties:
     type: string
     enum: ['male', 'female']
   waterRate:
-    description: "User's daylyNorm"
+    description: "User's dailyNorma"
     type: number
     example: 1800
   photo:
