@@ -4,19 +4,6 @@ summary: Refresh token of user
 operationId: refreshTokenUser
 description: Refresh the user's access token using the refresh token stored in cookies.
 security: []
-parameters:
-  - name: sessionId
-    in: cookie
-    required: true
-    schema:
-      type: string
-    description: The session ID stored in the cookie used to identify the user's session.
-  - name: refreshToken
-    in: cookie
-    required: true
-    schema:
-      type: string
-    description: The refresh token stored in cookies
 
 responses:
   '200':

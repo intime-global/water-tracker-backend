@@ -22,6 +22,8 @@ requestBody:
            description: "password"
            type: string
            example: '111223Jn'
+           minLength: 8
+           maxLength: 64
 responses:
   '200':
     description: Login a user

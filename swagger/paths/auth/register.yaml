@@ -18,9 +18,11 @@ requestBody:
             type: string
             example: kat8@example.com
           password:
-            description: "User's password. Min 8 characters, max 64 characters"
+            description: 'password'
             type: string
-            example: '123POIOI'
+            example: '111223Jn'
+            minLength: 8
+            maxLength: 64
 responses:
   '201':
     description: Created a user
@@ -41,11 +43,6 @@ responses:
               example: User successfully registred
             data:
               type: object
-              properties:
-                userId:
-                  description: "User's id"
-                  type: string
-                  example: 65e4decdd286b30065d54af9
   '401':
     $ref: '../../components/responses/401.yaml'
   '409':
