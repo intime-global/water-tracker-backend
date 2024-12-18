@@ -29,7 +29,7 @@
     }
   ],
   "paths": {
-    "/user": {
+    "/users": {
       "get": {
         "tags": [
           "User"
@@ -170,7 +170,7 @@
         }
       }
     },
-    "/user/avatar": {
+    "/users/avatar": {
       "patch": {
         "tags": [
           "User"
@@ -1147,7 +1147,7 @@
         ],
         "summary": "Get a list of WaterNotes for one month",
         "operationId": "getWaterNotesMonth",
-        "description": "Get a list of notes of water consumption for one month",
+        "description": "Get a list of notes of water consumption for the selected month. If parameters are not passed, the request by default returns a list for the current month of the current year.",
         "security": [
           {
             "bearerAuth": []

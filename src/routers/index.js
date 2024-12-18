@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import AuthRouter from './auth.js';
-import UsersRouter from './user.js';
+import UsersRouter from './users.js';
 import WatersRouter from './water.js';
 import WaterRateRouter from './waterRate.js';
 import WaterTodayRouter from './waterToday.js';
@@ -11,7 +11,7 @@ const router = Router();
 
 router.use('/auth', AuthRouter);
 
-router.use('/user', UsersRouter);
+router.use('/users', UsersRouter);
 
 router.use('/water', WatersRouter);
 
