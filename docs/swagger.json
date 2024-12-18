@@ -266,9 +266,9 @@
                     "example": "kat8@example.com"
                   },
                   "password": {
-                    "description": "User's password",
+                    "description": "User's password. Min 8 characters, max 64 characters",
                     "type": "string",
-                    "example": "123POI. Min 8 characters, max 64 characters"
+                    "example": "123POIOI"
                   }
                 }
               }
@@ -613,7 +613,7 @@
                   "password": {
                     "description": "User's new password",
                     "type": "string",
-                    "example": "123POI. Min 6 characters"
+                    "example": "qweqwe12 Min 8 characters, maximum 64 characters"
                   },
                   "token": {
                     "description": "User's token from url",
