@@ -13,12 +13,12 @@ router.use('/auth', AuthRouter);
 
 router.use('/users', UsersRouter);
 
+router.use('/water/rate', WaterRateRouter);
+
+router.use('/water/today', WaterTodayRouter);
+
+router.use('/water/month', WaterMonthRouter);
+
 router.use('/water', WatersRouter);
-
-router.use('/water-rate', WaterRateRouter);
-
-router.use('/water-today', WaterTodayRouter);
-
-router.use('/water-month', WaterMonthRouter);
 
 export default router;
