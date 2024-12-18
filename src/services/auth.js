@@ -1,4 +1,4 @@
-import createHttpError from "http-errors";
+import createHttpError from 'http-errors';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import { UsersCollection } from '../db/models/user.js';
@@ -116,7 +116,7 @@ export const requestResetToken = async (email) => {
   const template = handlebars.compile(templateSource);
   const html = template({
     name: user.name,
-    link: `${env('APP_DOMAIN')}/reset-pwd?token=${resetToken}`,
+    link: `${env('FRONTEND_DOMAIN')}/reset-pwd?token=${resetToken}`,
   });
   await sendEmail({
     from: env(SMTP.SMTP_FROM),

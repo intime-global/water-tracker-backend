@@ -24,7 +24,16 @@ export const setupServer = () => {
     }),
   );
 
-  app.use(cors());
+  app.use(
+    cors({
+      credentials: true,
+      origin: [
+        env('APP_DOMAIN'),
+        'https://water-tracker.online',
+        'http://localhost:5173',
+      ],
+    }),
+  );
   app.use(cookieParser());
 
   // app.use('/uploads', express.static(UPLOAD_DIR));

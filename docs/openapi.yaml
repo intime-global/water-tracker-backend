@@ -20,14 +20,14 @@ servers:
   - url: https://api.water-tracker.online
 paths:
   #додаємо запити по user
-  /user:
+  /users:
     get:
-      $ref: ../swagger/paths/user/get.yaml
+      $ref: ../swagger/paths/users/get.yaml
     patch:
-      $ref: ../swagger/paths/user/patch.yaml
-  /user/avatar:
+      $ref: ../swagger/paths/users/patch.yaml
+  /users/avatar:
     patch:
-      $ref: ../swagger/paths/user/avatar/patch.yaml
+      $ref: ../swagger/paths/users/avatar/patch.yaml
   #додаємо всі запити по auth
   /auth/register:
     post:

@@ -29,7 +29,7 @@
     }
   ],
   "paths": {
-    "/user": {
+    "/users": {
       "get": {
         "tags": [
           "User"
@@ -170,7 +170,7 @@
         }
       }
     },
-    "/user/avatar": {
+    "/users/avatar": {
       "patch": {
         "tags": [
           "User"
