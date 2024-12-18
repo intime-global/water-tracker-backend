@@ -195,7 +195,7 @@ export const getWaterMonthController = async (req, res) => {
       } else {
         acc.push({
           day: note.day,
-          month: note.month,
+          month: note.month,git
           waterVolume: note.waterVolume,
           waterRate: note.waterRate,
           consumedTimes: 1,

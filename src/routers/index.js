@@ -3,9 +3,9 @@ import { Router } from 'express';
 import AuthRouter from './auth.js';
 import UsersRouter from './users.js';
 import WatersRouter from './water.js';
-import WaterRateRouter from './waterRate.js';
-import WaterTodayRouter from './waterToday.js';
-import WaterMonthRouter from './waterMonth.js';
+import WaterRateRouter from './water-rate.js';
+import WaterTodayRouter from './water-today.js';
+import WaterMonthRouter from './water-month.js';
 
 const router = Router();
 
@@ -15,10 +15,10 @@ router.use('/users', UsersRouter);
 
 router.use('/water', WatersRouter);
 
-router.use('/waterRate', WaterRateRouter);
+router.use('/water-rate', WaterRateRouter);
 
-router.use('/waterToday', WaterTodayRouter);
+router.use('/water-today', WaterTodayRouter);
 
-router.use('/waterMonth', WaterMonthRouter);
+router.use('/water-month', WaterMonthRouter);
 
 export default router;

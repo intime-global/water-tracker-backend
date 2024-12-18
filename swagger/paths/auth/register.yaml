@@ -42,26 +42,10 @@ responses:
             data:
               type: object
               properties:
-                _id:
+                userId:
                   description: "User's id"
                   type: string
                   example: 65e4decdd286b30065d54af9
-                name:
-                  description: "User's name"
-                  type: string
-                  example: 'Anonymous'
-                email:
-                  description: "User's email"
-                  type: string
-                  example: 'Jonni_Do13@gmail.com'
-                gender:
-                  description: 'Your gender identify'
-                  type: string
-                  enum: ['female', 'male']
-                waterRate:
-                  description: "User's daylyNorm"
-                  type: number
-                  example: 1800
   '401':
     $ref: '../../components/responses/401.yaml'
   '409':
