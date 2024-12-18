@@ -59,11 +59,46 @@ export const getMonthWaterNotes = async ({
   month = CURRENT_DATE.CURRENT_MONTH,
   year = CURRENT_DATE.CURRENT_YEAR,
 }) => {
-  const monthWaterNotes = await WaterNotesCollection.find({
-    userId: _id,
-    month,
-    year,
-  });
+  const monthWaterNotes = await WaterNotesCollection.aggregate([
+    { $match: { userId: _id, month: month, year: year } },
+    {
+      $group: {
+        _id: { day: '$day', month: '$month' },
+        totalWaterVolume: { $sum: '$waterVolume' },
+        totalConsumedTimes: { $sum: 1 },
+        waterRate: { $last: '$waterRate' },
+      },
+    },
+    {
+      $addFields: {
+        percentage: {
+          $round: [
+            {
+              $multiply: [
+                { $divide: ['$totalWaterVolume', '$waterRate'] },
+                100,
+              ],
+            },
+            0,
+          ],
+        },
+      },
+    },
+    {
+      $sort: { '_id.day': 1 },
+    },
+    {
+      $project: {
+        day: '$_id.day',
+        month: '$_id.month',
+        waterVolume: '$totalWaterVolume',
+        waterRate: '$waterRate',
+        consumedTimes: '$totalConsumedTimes',
+        _id: 0,
+        percentage: 1,
+      },
+    },
+  ]);
 
   return monthWaterNotes;
 };
