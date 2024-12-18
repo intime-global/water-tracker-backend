@@ -18,11 +18,11 @@ requestBody:
             type: string
             example: kat8@example.com
           password:
-           description: "password"
-           type: string
-           example: '111223Jn'
-           minLength: 8
-           maxLength: 64
+            description: 'password'
+            type: string
+            example: '111223Jn'
+            minLength: 8
+            maxLength: 64
 responses:
   '201':
     description: Created a user

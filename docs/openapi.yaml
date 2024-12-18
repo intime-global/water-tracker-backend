@@ -61,13 +61,13 @@ paths:
       $ref: ../swagger/paths/water/{waterNoteId}/delete.yaml
   /waterRate:
     patch:
-      $ref: ../swagger/paths/waterRate/patch.yaml
+      $ref: ../swagger/paths/water-rate/patch.yaml
   /waterToday:
     get:
-      $ref: ../swagger/paths/waterToday/get.yaml
+      $ref: ../swagger/paths/water-today/get.yaml
   /waterMonth:
     get:
-      $ref: ../swagger/paths/waterMonth/get.yaml
+      $ref: ../swagger/paths/water-month/get.yaml
 components:
   securitySchemes:
     bearerAuth:

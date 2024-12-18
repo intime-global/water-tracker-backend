@@ -175,40 +175,10 @@ export const getWaterMonthController = async (req, res) => {
 
   const monthNotes = await getMonthWaterNotes({ _id, month, year });
 
-  let message = 'There are no notes for this month';
-  let result = [];
-  let resultMonthNotes = [];
+  const message =
+    monthNotes.length > 0
+      ? 'Successfully found water notes!'
+      : 'There are no notes for this month';
 
-  if (monthNotes.length > 0) {
-    resultMonthNotes = monthNotes.reduce((acc, note) => {
-      const existDay = acc.find((item) => item.day === note.day);
-
-      if (existDay) {
-        existDay.waterVolume += note.waterVolume;
-
-        existDay.percentage = Math.round(
-          (existDay.waterVolume * 100) / existDay.waterRate,
-        );
-
-        existDay.waterRate = note.waterRate;
-        existDay.consumedTimes += 1;
-      } else {
-        acc.push({
-          day: note.day,
-          month: note.month,
-          waterVolume: note.waterVolume,
-          waterRate: note.waterRate,
-          consumedTimes: 1,
-          percentage: Math.round((note.waterVolume * 100) / note.waterRate),
-        });
-      }
-
-      message = 'Successfully found water notes!';
-
-      return acc;
-    }, []);
-  }
-  result = [...resultMonthNotes];
-
-  res.status(200).json({ status: 200, message, data: result });
+  res.status(200).json({ status: 200, message, data: monthNotes });
 };
