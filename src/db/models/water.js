@@ -24,7 +24,7 @@ const waterNotesSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-// waterNotesSchema.index({ userId: 1, month: 1, year: 1 });
+waterNotesSchema.index({ userId: 1, month: 1, year: 1 });
 
 waterNotesSchema.post('save', handleSaveError);
 
