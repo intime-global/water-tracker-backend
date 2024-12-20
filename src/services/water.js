@@ -63,7 +63,7 @@ export const getMonthWaterNotes = async ({
     { $match: { userId: _id, month: month, year: year } },
     {
       $group: {
-        _id: { day: '$day', month: '$month' },
+        _id: { day: '$day', month: '$month', year: '$year' },
         totalWaterVolume: { $sum: '$waterVolume' },
         totalConsumedTimes: { $sum: 1 },
         waterRate: { $last: '$waterRate' },
@@ -91,6 +91,7 @@ export const getMonthWaterNotes = async ({
       $project: {
         day: '$_id.day',
         month: '$_id.month',
+        year: '$_id.year',
         waterVolume: '$totalWaterVolume',
         waterRate: '$waterRate',
         consumedTimes: '$totalConsumedTimes',
