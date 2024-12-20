@@ -21,7 +21,7 @@ const usersSchema = new Schema(
     photo: {
       type: String,
       default:
-        'https://res.cloudinary.com/dzfjpbsml/image/upload/v1734514206/apz0fewlkkrj7s56dqfc.jpg',
+        'https://res.cloudinary.com/dpzs8insu/image/upload/v1734645542/yzvtadum5zkjv133cn2a.jpg',
     },
   },
   { timestamps: true, versionKey: false },
