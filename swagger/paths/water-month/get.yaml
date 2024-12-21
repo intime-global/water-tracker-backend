@@ -41,6 +41,7 @@ responses:
                 required:
                   - day
                   - month
+                  - year
                   - waterVolume
                   - waterRate
                   - consumedTimes
@@ -54,6 +55,10 @@ responses:
                     description: 'The month for which the water notes were received'
                     type: string
                     example: '12'
+                  year:
+                    description: 'The year for which the water notes were received'
+                    type: string
+                    example: '2024'
                   waterVolume:
                     description: 'Volume of water consumed for the selected day'
                     type: number
