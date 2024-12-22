@@ -134,7 +134,6 @@ export const updateWaterRateController = async (req, res, next) => {
 
 export const getTodayWaterController = async (req, res, next) => {
   const _id = req.user._id;
-  const { day: currentDay } = req.query;
 
   const user = await UsersCollection.findOne({ _id });
   if (!user) {
@@ -142,27 +141,17 @@ export const getTodayWaterController = async (req, res, next) => {
     return;
   }
 
-  let year = 0;
-  let month = 0;
-  let day = 0;
+  let day, month, year;
 
-  if (currentDay) {
-    const [yearQuery, monthQuery, dayQuery] = currentDay.split('-');
+  if (req.query && Object.keys(req.query).length > 0) {
+    const parsedParams = parseDateParams(req.query);
 
-    const resultParse = parseDateParams({
-      year: yearQuery,
-      month: monthQuery,
-      day: dayQuery,
-    });
-
-    year = resultParse.year;
-    month = resultParse.month;
-    day = resultParse.day;
-
-    if (!year || !month || !day) {
+    if (!parsedParams.year || !parsedParams.month || !parsedParams.day) {
       next(createHttpError(400, 'Bad query params'));
       return;
     }
+
+    ({ day, month, year } = parsedParams);
   } else {
     const today = new Date().toISOString();
     const [datePart] = today.split('T');
