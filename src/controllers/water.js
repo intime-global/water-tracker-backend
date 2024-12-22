@@ -160,13 +160,17 @@ export const getTodayWaterController = async (req, res, next) => {
 
   const todayNotes = await getTodayWaterNotes({ _id, year, month, day });
 
-  const waterGoal = req.user.waterRate;
+  const waterGoal = todayNotes[0]?.waterRate;
 
   const consumedToday = todayNotes.reduce(
     (acc, note) => acc + note.waterVolume,
     0,
   );
-  const percentage = Math.ceil((consumedToday * 100) / waterGoal);
+
+  let percentage = 0;
+  if (waterGoal) {
+    percentage = Math.ceil((consumedToday * 100) / waterGoal);
+  }
 
   const message =
     todayNotes.length > 0
