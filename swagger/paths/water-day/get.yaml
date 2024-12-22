@@ -1,0 +1,65 @@
+tags:
+  - Water
+summary: Get a list of WaterNotes for requested day
+operationId: getDayWaterNotes
+description: 'Get a list of notes of water consumption for requested day'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: day
+    schema:
+      type: integer
+      example: 22
+    required: true
+  - in: query
+    name: month
+    schema:
+      type: integer
+      example: 12
+    required: true
+  - in: query
+    name: year
+    schema:
+      type: integer
+      example: 2024
+    required: true
+responses:
+  '200':
+    description: Successfully found notes of water!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found notes of water!
+            data:
+              type: object
+              required:
+                - notes
+                - percentage
+              properties:
+                notes:
+                  type: array
+                  items:
+                    $ref: ../../components/schemas/water.yaml
+                percentage:
+                  type: number
+                  example: 60
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

@@ -6,7 +6,11 @@ import createHttpError from 'http-errors';
 const googleOAuthClient = new OAuth2Client({
   clientId: env('GOOGLE_AUTH_CLIENT_ID'),
   clientSecret: env('GOOGLE_AUTH_CLIENT_SECRET'),
+<<<<<<< HEAD
+  redirectUri: oauthConfig.web.redirect_uris[0],
+=======
   redirectUri: `${env('FRONTEND_DOMAIN')}/googleauth`,
+>>>>>>> main
 });
 
 export const generateAuthUrl = () =>
