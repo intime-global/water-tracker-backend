@@ -7,7 +7,7 @@ const usersSchema = new Schema(
   {
     name: {
       type: String,
-      default: 'Anonymous',
+      default: '',
     },
     email: { type: String, match: emailRegexp, required: true, unique: true },
     password: { type: String, required: true },
@@ -20,8 +20,7 @@ const usersSchema = new Schema(
     gender: { type: String, enum: ['male', 'female'], default: 'female' },
     photo: {
       type: String,
-      default:
-        'https://res.cloudinary.com/dpzs8insu/image/upload/v1734645542/yzvtadum5zkjv133cn2a.jpg',
+      default: '',
     },
   },
   { timestamps: true, versionKey: false },
