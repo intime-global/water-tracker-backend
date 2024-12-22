@@ -103,14 +103,3 @@ export const getMonthWaterNotes = async ({
 
   return monthWaterNotes;
 };
-
-export const waterDayInfo = async ({ _id, year, month, day }) => {
-  const dayInfo = await WaterNotesCollection.find({
-    userId: _id,
-    year,
-    month,
-    day,
-  });
-
-  return dayInfo;
-};

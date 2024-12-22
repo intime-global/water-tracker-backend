@@ -7,7 +7,6 @@ import {
   removeWater,
   updateWater,
   updateWaterRate,
-  waterDayInfo,
 } from '../services/water.js';
 import { UsersCollection } from '../db/models/user.js';
 import { parseDateParams } from '../utils/parseDateParams.js';
@@ -148,7 +147,22 @@ export const getTodayWaterController = async (req, res, next) => {
   let day = 0;
 
   if (currentDay) {
-    [year, month, day] = currentDay.split('-');
+    const [yearQuery, monthQuery, dayQuery] = currentDay.split('-');
+
+    const resultParse = parseDateParams({
+      year: yearQuery,
+      month: monthQuery,
+      day: dayQuery,
+    });
+
+    year = resultParse.year;
+    month = resultParse.month;
+    day = resultParse.day;
+
+    if (!year || !month || !day) {
+      next(createHttpError(400, 'Bad query params'));
+      return;
+    }
   } else {
     const today = new Date().toISOString();
     const [datePart] = today.split('T');
@@ -196,33 +210,4 @@ export const getWaterMonthController = async (req, res) => {
       : 'There are no notes for this month';
 
   res.status(200).json({ status: 200, message, data: monthNotes });
-};
-
-/**
-  |============================
-  | get day info water controller
-  |============================
-*/
-
-export const getDayWaterController = async (req, res, next) => {
-  const { day: currentDay } = req.query;
-  const _id = req.user._id;
-
-  const [year, month, day] = currentDay.split('-');
-  console.log(year, month, day, 'year, month, day');
-
-  const user = await UsersCollection.findOne({ _id });
-  if (!user) {
-    next(createHttpError(404, 'User not found'));
-    return;
-  }
-
-  const waterDay = await waterDayInfo({ _id, year, month, day });
-
-  const message =
-    waterDay.length > 0
-      ? 'Successfully found water notes!'
-      : 'There are no notes for this day';
-
-  res.status(200).json({ status: 200, message, data: waterDay });
 };

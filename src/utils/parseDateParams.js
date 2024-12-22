@@ -4,8 +4,8 @@ export const parseDateParams = ({ month, year, day }) => {
   const parsedDay = parseDay(day);
 
   return {
-    month: parsedMonth,
     year: parsedYear,
+    month: parsedMonth,
     day: parsedDay,
   };
 };
