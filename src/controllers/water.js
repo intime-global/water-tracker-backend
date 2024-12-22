@@ -134,6 +134,7 @@ export const updateWaterRateController = async (req, res, next) => {
 
 export const getTodayWaterController = async (req, res, next) => {
   const _id = req.user._id;
+  const { day: currentDay } = req.query;
 
   const user = await UsersCollection.findOne({ _id });
   if (!user) {
@@ -141,9 +142,32 @@ export const getTodayWaterController = async (req, res, next) => {
     return;
   }
 
-  const today = new Date().toISOString();
-  const [datePart] = today.split('T');
-  const [year, month, day] = datePart.split('-');
+  let year = 0;
+  let month = 0;
+  let day = 0;
+
+  if (currentDay) {
+    const [yearQuery, monthQuery, dayQuery] = currentDay.split('-');
+
+    const resultParse = parseDateParams({
+      year: yearQuery,
+      month: monthQuery,
+      day: dayQuery,
+    });
+
+    year = resultParse.year;
+    month = resultParse.month;
+    day = resultParse.day;
+
+    if (!year || !month || !day) {
+      next(createHttpError(400, 'Bad query params'));
+      return;
+    }
+  } else {
+    const today = new Date().toISOString();
+    const [datePart] = today.split('T');
+    [year, month, day] = datePart.split('-');
+  }
 
   const todayNotes = await getTodayWaterNotes({ _id, year, month, day });
 
@@ -155,9 +179,14 @@ export const getTodayWaterController = async (req, res, next) => {
   );
   const percentage = Math.ceil((consumedToday * 100) / waterGoal);
 
+  const message =
+    todayNotes.length > 0
+      ? 'Successfully found water notes!'
+      : 'There are no notes for this day';
+
   res.status(200).json({
     status: 200,
-    message: 'Successfully found notes of water',
+    message,
     data: { notes: todayNotes, percentage },
   });
 };
