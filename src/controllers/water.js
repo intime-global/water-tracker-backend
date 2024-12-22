@@ -7,6 +7,7 @@ import {
   removeWater,
   updateWater,
   updateWaterRate,
+  waterDayInfo,
 } from '../services/water.js';
 import { UsersCollection } from '../db/models/user.js';
 import { parseDateParams } from '../utils/parseDateParams.js';
@@ -134,6 +135,7 @@ export const updateWaterRateController = async (req, res, next) => {
 
 export const getTodayWaterController = async (req, res, next) => {
   const _id = req.user._id;
+  const { day: currentDay } = req.query;
 
   const user = await UsersCollection.findOne({ _id });
   if (!user) {
@@ -141,9 +143,17 @@ export const getTodayWaterController = async (req, res, next) => {
     return;
   }
 
-  const today = new Date().toISOString();
-  const [datePart] = today.split('T');
-  const [year, month, day] = datePart.split('-');
+  let year = 0;
+  let month = 0;
+  let day = 0;
+
+  if (currentDay) {
+    [year, month, day] = currentDay.split('-');
+  } else {
+    const today = new Date().toISOString();
+    const [datePart] = today.split('T');
+    [year, month, day] = datePart.split('-');
+  }
 
   const todayNotes = await getTodayWaterNotes({ _id, year, month, day });
 
@@ -155,9 +165,14 @@ export const getTodayWaterController = async (req, res, next) => {
   );
   const percentage = Math.ceil((consumedToday * 100) / waterGoal);
 
+  const message =
+    todayNotes.length > 0
+      ? 'Successfully found water notes!'
+      : 'There are no notes for this day';
+
   res.status(200).json({
     status: 200,
-    message: 'Successfully found notes of water',
+    message,
     data: { notes: todayNotes, percentage },
   });
 };
@@ -181,4 +196,33 @@ export const getWaterMonthController = async (req, res) => {
       : 'There are no notes for this month';
 
   res.status(200).json({ status: 200, message, data: monthNotes });
+};
+
+/**
+  |============================
+  | get day info water controller
+  |============================
+*/
+
+export const getDayWaterController = async (req, res, next) => {
+  const { day: currentDay } = req.query;
+  const _id = req.user._id;
+
+  const [year, month, day] = currentDay.split('-');
+  console.log(year, month, day, 'year, month, day');
+
+  const user = await UsersCollection.findOne({ _id });
+  if (!user) {
+    next(createHttpError(404, 'User not found'));
+    return;
+  }
+
+  const waterDay = await waterDayInfo({ _id, year, month, day });
+
+  const message =
+    waterDay.length > 0
+      ? 'Successfully found water notes!'
+      : 'There are no notes for this day';
+
+  res.status(200).json({ status: 200, message, data: waterDay });
 };
