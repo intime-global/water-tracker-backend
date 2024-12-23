@@ -1,10 +1,12 @@
-export const parseDateParams = ({ month, year }) => {
+export const parseDateParams = ({ month, year, day }) => {
   const parsedMonth = parseMonth(month);
   const parsedYear = parseYear(year);
+  const parsedDay = parseDay(day);
 
   return {
-    month: parsedMonth,
     year: parsedYear,
+    month: parsedMonth,
+    day: parsedDay,
   };
 };
 
@@ -23,4 +25,12 @@ function parseYear(year) {
   if (year.length !== 4) return;
 
   return year;
+}
+
+function parseDay(day) {
+  if (typeof day !== 'string') return;
+
+  if (day > 31 || day < 0) return;
+
+  return day;
 }

@@ -141,23 +141,45 @@ export const getTodayWaterController = async (req, res, next) => {
     return;
   }
 
-  const today = new Date().toISOString();
-  const [datePart] = today.split('T');
-  const [year, month, day] = datePart.split('-');
+  let day, month, year;
+
+  if (req.query && Object.keys(req.query).length > 0) {
+    const parsedParams = parseDateParams(req.query);
+
+    if (!parsedParams.year || !parsedParams.month || !parsedParams.day) {
+      next(createHttpError(400, 'Bad query params'));
+      return;
+    }
+
+    ({ day, month, year } = parsedParams);
+  } else {
+    const today = new Date().toISOString();
+    const [datePart] = today.split('T');
+    [year, month, day] = datePart.split('-');
+  }
 
   const todayNotes = await getTodayWaterNotes({ _id, year, month, day });
 
-  const waterGoal = req.user.waterRate;
+  const waterGoal = todayNotes[0]?.waterRate;
 
   const consumedToday = todayNotes.reduce(
     (acc, note) => acc + note.waterVolume,
     0,
   );
-  const percentage = Math.ceil((consumedToday * 100) / waterGoal);
+
+  let percentage = 0;
+  if (waterGoal) {
+    percentage = Math.ceil((consumedToday * 100) / waterGoal);
+  }
+
+  const message =
+    todayNotes.length > 0
+      ? 'Successfully found water notes!'
+      : 'There are no notes for this day';
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully found notes of water',
+    message,
     data: { notes: todayNotes, percentage },
   });
 };

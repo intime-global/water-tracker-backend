@@ -63,6 +63,9 @@ paths:
   /water/month:
     get:
       $ref: ../swagger/paths/water-month/get.yaml
+  /water/day:
+    get:
+      $ref: ../swagger/paths/water-day/get.yaml
   /water/{waterNoteId}:
     patch:
       $ref: ../swagger/paths/water/{waterNoteId}/patch.yaml

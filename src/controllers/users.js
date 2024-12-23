@@ -49,14 +49,21 @@ export const patchUserParamsControl = async (req, res, next) => {
   if (req.body.newPassword) {
     const { oldPassword, newPassword } = req.body;
     if (!oldPassword || !newPassword) {
-      next(createHttpError(404, 'Password not found'));
+      next(createHttpError(400, 'Old a new password are required'));
       return;
     }
+
     const user = await UsersCollection.findOne({ _id });
+    if (!user) {
+      next(createHttpError(404, 'User not found.'));
+      return;
+    }
+
     const passwordCompare = await bcrypt.compare(oldPassword, user.password);
     if (!passwordCompare) {
-      throw createHttpError(401, 'oldPassword is invalid');
+      throw createHttpError(400, 'Old Password is invalid');
     }
+
     const hashPassword = await bcrypt.hash(newPassword, 10);
     delete payload.oldPassword;
     delete payload.newPassword;
