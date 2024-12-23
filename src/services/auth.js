@@ -229,7 +229,8 @@ export const loginOrSignupWithGoogle = async (code) => {
       email: payload.email,
       name: getUsernameFromGoogleTokenPayload(payload),
       password,
-      role: 'parent',
+      photo: payload.picture,
+      isActive: true,
     });
   }
 
