@@ -22,6 +22,7 @@ import {
   getUsernameFromGoogleTokenPayload,
   validateCode,
 } from '../utils/googleOAuth2.js';
+import { generateActivationToken } from '../utils/generateActivationToken.js';
 
 const createSession = () => {
   const accessToken = randomBytes(30).toString('base64');
@@ -44,7 +45,64 @@ export const register = async (payload) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  return UsersCollection.create({ ...payload, password: hashPassword });
+  const newUser = await UsersCollection.create({
+    ...payload,
+    password: hashPassword,
+  });
+
+  const activateToken = generateActivationToken(newUser._id, newUser.email);
+
+  const confirmEmailTemplatePath = path.join(
+    TEMPLATES_DIR,
+    'confirm-email.html',
+  );
+
+  const templateSource = (
+    await fs.readFile(confirmEmailTemplatePath)
+  ).toString();
+
+  const template = handlebars.compile(templateSource);
+  const html = template({
+    link: `${env('FRONTEND_DOMAIN')}/confirm-email?token=${activateToken}`,
+  });
+
+  try {
+    await sendEmail({
+      from: env(SMTP.SMTP_FROM),
+      to: email,
+      subject: 'Confirm your email',
+      html,
+    });
+  } catch (error) {
+    throw createHttpError(500, error.message || 'Email sending failed');
+  }
+  return;
+};
+
+export const confirmEmail = async (payload) => {
+  const { token } = payload;
+
+  if (!token) {
+    throw createHttpError(400, 'Activation token required');
+  }
+
+  try {
+    const decoded = jwt.verify(token, env('JWT_SECRET'));
+    const user = await UsersCollection.findById({ _id: decoded.sub });
+    if (!user) {
+      throw createHttpError(404, 'User not found');
+    }
+
+    if (user.isActive) {
+      throw createHttpError(400, 'Account is already activated');
+    }
+
+    await UsersCollection.updateOne({ _id: user._id }, { isActive: true });
+  } catch (err) {
+    if (err instanceof Error)
+      throw createHttpError(401, 'Token is expired or invalid.');
+    throw err;
+  }
 };
 
 export const login = async ({ email, password }) => {

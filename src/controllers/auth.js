@@ -31,6 +31,16 @@ export const registerController = async (req, res) => {
   });
 };
 
+export const confirmEmailController = async (req, res) => {
+  await authServices.confirmEmail(req.body);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully confirmed email',
+    data: {},
+  });
+};
+
 export const loginController = async (req, res) => {
   const session = await authServices.login(req.body);
 

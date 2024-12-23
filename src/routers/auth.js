@@ -13,6 +13,12 @@ authRouter.post(
 );
 
 authRouter.post(
+  '/confirm-email',
+  validateBody(vldt.confirmEmailSchema),
+  ctrlWrapper(auth.confirmEmailController),
+);
+
+authRouter.post(
   '/login',
   validateBody(vldt.authLoginSchema),
   ctrlWrapper(auth.loginController),

@@ -9,6 +9,10 @@ export const authRegisterSchema = Joi.object({
   password: Joi.string().min(8).max(64).required(),
 });
 
+export const confirmEmailSchema = Joi.object({
+  token: Joi.string().required(),
+});
+
 // signin
 export const authLoginSchema = Joi.object({
   email: Joi.string().email().required(),
