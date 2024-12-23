@@ -97,7 +97,10 @@ export const confirmEmail = async (payload) => {
       throw createHttpError(400, 'Account is already activated');
     }
 
-    await UsersCollection.updateOne({ _id: user._id }, { isActive: true });
+    return await UsersCollection.updateOne(
+      { _id: user._id },
+      { isActive: true },
+    );
   } catch (err) {
     if (err instanceof Error)
       throw createHttpError(401, 'Token is expired or invalid.');
@@ -114,6 +117,13 @@ export const login = async ({ email, password }) => {
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw createHttpError(401, 'Email or password invalid');
+  }
+
+  if (!user.isActive) {
+    throw createHttpError(
+      401,
+      'Your account is not active, please confirm your email via link sent you to mailbox',
+    );
   }
 
   await SessionCollection.deleteOne({ userId: user._id });
