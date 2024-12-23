@@ -89,18 +89,21 @@ export const confirmEmail = async (payload) => {
   try {
     const decoded = jwt.verify(token, env('JWT_SECRET'));
     const user = await UsersCollection.findById({ _id: decoded.sub });
+    console.log('step zero');
     if (!user) {
       throw createHttpError(404, 'User not found');
     }
-
+    console.log(user);
     if (user.isActive) {
       throw createHttpError(400, 'Account is already activated');
     }
-
-    return await UsersCollection.updateOne(
-      { _id: user._id },
-      { isActive: true },
-    );
+    console.log('step one');
+    await UsersCollection.updateOne({ _id: user._id }, { isActive: true });
+    console.log('step two');
+    await SessionCollection.findOneAndDelete({ userId: user._id });
+    console.log('step thee');
+    const session = createSession();
+    return SessionCollection.create({ userId: user._id, ...session });
   } catch (err) {
     if (err instanceof Error)
       throw createHttpError(401, 'Token is expired or invalid.');
@@ -126,7 +129,7 @@ export const login = async ({ email, password }) => {
     );
   }
 
-  await SessionCollection.deleteOne({ userId: user._id });
+  await SessionCollection.findOneAndDelete({ userId: user._id });
 
   const newSession = createSession();
 

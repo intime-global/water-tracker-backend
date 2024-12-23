@@ -32,12 +32,12 @@ export const registerController = async (req, res) => {
 };
 
 export const confirmEmailController = async (req, res) => {
-  await authServices.confirmEmail(req.body);
-
-  res.status(201).json({
-    status: 201,
+  const session = await authServices.confirmEmail(req.body);
+  setupSession(res, session);
+  res.status(200).json({
+    status: 200,
     message: 'Successfully confirmed email',
-    data: {},
+    data: { accessToken: session.accessToken },
   });
 };
 
