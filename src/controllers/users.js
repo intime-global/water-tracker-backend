@@ -49,7 +49,7 @@ export const patchUserParamsControl = async (req, res, next) => {
   if (req.body.newPassword) {
     const { oldPassword, newPassword } = req.body;
     if (!oldPassword || !newPassword) {
-      next(createHttpError(400, 'Old a new password are required'));
+      next(createHttpError(400, 'Old and new password are required'));
       return;
     }
 
