@@ -61,7 +61,7 @@ export const patchUserParamsControl = async (req, res, next) => {
 
     const passwordCompare = await bcrypt.compare(oldPassword, user.password);
     if (!passwordCompare) {
-      throw createHttpError(401, 'Old Password is invalid');
+      throw createHttpError(400, 'Old Password is invalid');
     }
 
     const hashPassword = await bcrypt.hash(newPassword, 10);
