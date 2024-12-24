@@ -199,12 +199,11 @@ export const getWaterMonthController = async (req, res) => {
 
   const lastElement = monthNotes[monthNotes.length - 1];
 
-  console.log(lastElement, 'lastElement');
-
   if (monthNotes.length > 0 && lastElement.waterRate !== req.user.waterRate) {
     lastElement.percentage = Math.round(
       (lastElement.waterVolume / req.user.waterRate) * 100,
     );
+    lastElement.waterRate = req.user.waterRate;
   }
 
   const message =
