@@ -4,7 +4,7 @@ import { genderEnum } from '../constants/users.js';
 import { emailRegexp } from '../constants/users.js';
 
 export const updateUsersCard = Joi.object({
-  name: Joi.string().min(3).max(32).messages({
+  name: Joi.string().allow('').messages({
     'string.base': 'Username should be a string',
     'string.min': 'Username should have at least {#limit} characters',
     'string.max': 'Username should have at most {#limit} characters',
