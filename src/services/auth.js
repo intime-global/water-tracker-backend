@@ -40,7 +40,10 @@ export const register = async (payload) => {
   const { email, password } = payload;
   const user = await UsersCollection.findOne({ email });
   if (user) {
-    throw createHttpError(409, 'Email already in use');
+    throw createHttpError(
+      409,
+      'Email already in use. Please login with this email or choose another one for registration. Any time you can reset your password by click on "Forgot password" button',
+    );
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
@@ -88,21 +91,20 @@ export const confirmEmail = async (payload) => {
 
   try {
     const decoded = jwt.verify(token, env('JWT_SECRET'));
+
     const user = await UsersCollection.findById({ _id: decoded.sub });
-    console.log('step zero');
     if (!user) {
       throw createHttpError(404, 'User not found');
     }
-    console.log(user);
     if (user.isActive) {
       throw createHttpError(400, 'Account is already activated');
     }
-    console.log('step one');
+
     await UsersCollection.updateOne({ _id: user._id }, { isActive: true });
-    console.log('step two');
     await SessionCollection.findOneAndDelete({ userId: user._id });
-    console.log('step thee');
+
     const session = createSession();
+
     return SessionCollection.create({ userId: user._id, ...session });
   } catch (err) {
     if (err instanceof Error)
