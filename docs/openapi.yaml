@@ -1,13 +1,10 @@
-# Цей блок вказує, що для доступу до операції потрібна аутентифікація за допомогою Bearer Token (bearerAuth), який був визначений у /docs/openapi.yaml
-# /docs/openapi.yaml
-
 openapi: 3.1.0
 info:
   version: 1.0.0
   title: Water tracker app
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    name: ISC
+    identifier: ISC
   description: This is a documentation of Water tracker app
 tags:
   - name: User

@@ -4,8 +4,8 @@
     "version": "1.0.0",
     "title": "Water tracker app",
     "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      "name": "ISC",
+      "identifier": "ISC"
     },
     "description": "This is a documentation of Water tracker app"
   },
